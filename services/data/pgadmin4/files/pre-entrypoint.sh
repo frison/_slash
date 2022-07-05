@@ -15,13 +15,13 @@ export PGADMIN_DEFAULT_PASSWORD=${DEFAULT_DB_PASSWORD:-${PGADMIN_DEFAULT_PASSWOR
 export PGADMIN_CONFIG_SERVER_MODE="False"
 export PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED="False"
 
-## Create /var/lib/pgadmin/pgpass
+## Create /var/lib/pgadmin/pgpass which provides the credentials referenced in the servers.json below
 echo -n "$POSTGRES_HOST:$POSTGRES_PORT:$POSTGRES_DB:$POSTGRES_USER:$POSTGRES_PASSWORD" | tee /var/lib/pgadmin/pgpass >/dev/null
 
 chmod 600 /var/lib/pgadmin/pgpass
 chown pgadmin:root /var/lib/pgadmin/pgpass
 
-## Create servers.json
+## Create servers.json which sets up the connection between pgadmin and our postgres server
 tee /pgadmin4/servers.json >/dev/null <<EOF
 {
     "Servers": {
