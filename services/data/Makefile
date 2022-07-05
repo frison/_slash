@@ -10,7 +10,7 @@ clean-data:
 	(docker volume rm $$(docker volume ls --quiet | grep -v vscode); true)
 	echo "Docker cleaned up"
 
-# Web based database manager, opens on http://localhost:3082/
+# Web based database manager, opens on http://localhost:3081/
 db-admin:
 	docker-compose up db-admin
 
