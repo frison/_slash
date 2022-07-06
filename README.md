@@ -1,3 +1,12 @@
+# Usage
+
+In your repository run:
+`git submodule add git@github.com:frison/_slash.git _ && cd _ && make setup`
+
+Then in your project run:
+And set up your environment variables
+
+
 # Coalesce on null+empty
 ${FOO:-${BAR:-default}}
 
@@ -19,3 +28,10 @@ Make sure to start the database first
 cd environments
 make build
 docker-compose run [python-cli|rails-cli|...]
+
+# Making changes
+
+environments/docker-compose.yml
+    - env_file should not be parent of the project root while making changes, or you should make one in your project root parent
+services/data/docker-compose.yml
+    - env_file should not be parent of the project root while making changes, or you should make one in your project root parent
