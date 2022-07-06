@@ -8,9 +8,7 @@ x-defaults: &defaults
 services:
   db-cli:
     <<: *defaults
-    image: environment-dev-base:local-latest
-    networks:
-      - database
+    image: dev-base:local
     command: sh -c "PGPASSWORD=$${DEFAULT_DB_PASSWORD} psql --host=$${DEFAULT_DB_HOST} --username=$${DEFAULT_DB_USER} $${DEFAULT_DB_NAME}"
 
 networks:

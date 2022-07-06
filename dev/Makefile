@@ -1,4 +1,4 @@
-SUBDIRS = dev services
+SUBDIRS = base python rails
 
 .EXPORT_ALL_VARIABLES:
 

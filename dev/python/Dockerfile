@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # escape=\
-FROM environment-dev-base:local-latest
+FROM dev-base:local
 
 # The base's software-properties-common package gets us most of the way
 # there by providing python 3.9.9

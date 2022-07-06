@@ -1,14 +1,12 @@
 version: "3.8"
 
 x-defaults: &defaults
-  env_file: ../../../.env
+  env_file: ../../.env
 
 services:
-  db:
+  database:
     <<: *defaults
-    build:
-      context: postgres
-      dockerfile: Dockerfile
+    image: services-data-postgres:local
     volumes:
       - postgres:/var/lib/postgresql/data:delegated
     networks:
@@ -20,22 +18,21 @@ services:
       timeout: 30s
       retries: 10
 
-  db-admin:
+  database-admin:
     <<: *defaults
-    build:
-      context: pgadmin4
-      dockerfile: Dockerfile
+    image: services-data-pgadmin4:local
     networks:
       - database
     restart: always
     depends_on:
-      db:
+      database:
         condition: service_healthy
     ports:
       - "3081:80"
 
 volumes:
   postgres:
+    name: dev-postgres
 
 networks:
   database:

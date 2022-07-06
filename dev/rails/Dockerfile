@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # escape=\
-FROM environment-dev-base:local-latest
+FROM dev-base:local
 
 
 # --allow-downgrates is to install a compatible postgres driver for rails. We need to downgrade psql5 that is installed in the base

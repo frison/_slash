@@ -1,4 +1,4 @@
-SUBDIRS = dev services
+SUBDIRS = data
 
 .EXPORT_ALL_VARIABLES:
 

@@ -1,11 +1,21 @@
 # Usage
 
 In your repository run:
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+```
+git submodule add git@github.com:frison/_slash.git _
+cd _
+cat .env >> ../.env
+vim ../.env # Should have reasonable enough defaults
+make build
+```
 
-Then in your project run:
-And set up your environment variables
-
+Verification:
+```
+cd _
+COMPOSE_FILE=services/docker-compose.yml docker-compose up
+echo "http://localhost:3081" # Should be accessible and show pgadmin4
+docker-compose run db-cli
+```
 
 # Coalesce on null+empty
 ${FOO:-${BAR:-default}}
