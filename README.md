@@ -1,7 +1,7 @@
 # Usage
 
 In your repository run:
-`git submodule add git@github.com:frison/_slash.git _ && cd _ && make setup`
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 Then in your project run:
 And set up your environment variables
