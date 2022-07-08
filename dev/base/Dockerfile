@@ -19,6 +19,7 @@ RUN \
   locales \
   man \
   netcat \
+  openssh-client \
   postgresql-client \
   software-properties-common \
   sudo \
