@@ -1,7 +1,9 @@
 version: "3.8"
 
+# It is assumed this compose file will be ran from a path
+# with a .env file.
 x-defaults: &defaults
-  env_file: ../../.env
+  env_file: ./.env
 
 services:
   database:
