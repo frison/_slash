@@ -17,7 +17,7 @@ RUN \
   libyaml-dev \
   libsqlite3-dev \
   libpq-dev \
-  libpq5=14.3-0ubuntu0.22.04.1 \
+  libpq5=14.4-0ubuntu0.22.04.1 \
   sqlite3 \
   libxml2-dev \
   libxslt1-dev \
