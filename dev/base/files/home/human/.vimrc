@@ -70,4 +70,4 @@ try
   source ~/.vimrc-local
 catch
   " No such file? No problem; just ignore it.
-endtry 
+endtry
