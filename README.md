@@ -1,5 +1,14 @@
 # Usage
 
+This project is designed to be used as a submodule of other projects. It does the following stuff not bad:
+- The source of all containers for the project
+  - How the containers are built
+- Serves as the home for any services you need
+  - Demonstrates useful patterns for hooking into containers initializers
+  - Has a docker-compose.yml file that can be used as dependent services or initialized in a development container
+- Forces consistent environment variables across your containers
+- Demonstrates useful patterns for hooking into containers
+
 In your repository run:
 ```
 git submodule add git@github.com:frison/_slash.git _
@@ -17,11 +26,12 @@ echo "http://localhost:3081" # Should be accessible and show pgadmin4
 docker-compose run db-cli
 ```
 
-# Coalesce on null+empty
-${FOO:-${BAR:-default}}
+# Good Enough Bash Patterns
 
-# Coalesce on null (unset)
-${FOO-${BAR-default}}
+|Category|What|Snippet|Example|
+|---|---|---|
+|Environment Variables|Coalesce (use 'default') on null+empty|`${FOO:-${BAR:-default}}`||
+|Environment Variables|Coalesce (use 'default') on null|`${FOO-${BAR-default}}`||
 
 # The Makefile list of targets
 https://stackoverflow.com/questions/4219255/how-do-you-get-the-list-of-targets-in-a-makefile
@@ -42,6 +52,6 @@ docker-compose run [python-cli|rails-cli|...]
 # Making changes
 
 environments/docker-compose.yml
-    - env_file should not be parent of the project root while making changes, or you should make one in your project root parent
+    - You must make an .env file in the parent of the root directory
 services/data/docker-compose.yml
     - env_file should not be parent of the project root while making changes, or you should make one in your project root parent
