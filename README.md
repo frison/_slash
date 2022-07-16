@@ -28,10 +28,10 @@ docker-compose run db-cli
 
 # Good Enough Bash Patterns
 
-|Category|What|Snippet|Example|
+|Category|What|Snippet|
 |---|---|---|
-|Environment Variables|Coalesce (use 'default') on null+empty|`${FOO:-${BAR:-default}}`||
-|Environment Variables|Coalesce (use 'default') on null|`${FOO-${BAR-default}}`||
+|Environment Variables|Coalesce (use 'default') on null or empty|`${FOO:-${BAR:-default}}`|
+|Environment Variables|Coalesce (use 'default') on null|`${FOO-${BAR-default}}`|
 
 # The Makefile list of targets
 https://stackoverflow.com/questions/4219255/how-do-you-get-the-list-of-targets-in-a-makefile
