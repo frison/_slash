@@ -8,6 +8,7 @@ This project is designed to be used as a submodule of other projects. It does th
   - Has a docker-compose.yml file that can be used as dependent services or initialized in a development container
 - Forces consistent environment variables across your containers
 - Demonstrates useful patterns for hooking into containers
+- No downstream `apt-get update` . For example, if a container is based on `dev-base:local` it must not run `apt-get update` even if a package update would require it. The base images needs to have it's cache busted and everyone needs to read why.
 
 In your repository run:
 ```

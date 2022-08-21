@@ -2,12 +2,9 @@
 # escape=\
 FROM dev-base:local
 
-
-# --allow-downgrates is to install a compatible postgres driver for rails. We need to downgrade psql5 that is installed in the base
 RUN \
   DEBIAN_FRONTEND='noninteractive' \
   sudo -E apt-get install -y --no-install-recommends \
-  --allow-downgrades \
   git-core \
   zlib1g-dev \
   build-essential \
@@ -17,7 +14,7 @@ RUN \
   libyaml-dev \
   libsqlite3-dev \
   libpq-dev \
-  libpq5=14.4-0ubuntu0.22.04.1 \
+  libpq5 \
   sqlite3 \
   libxml2-dev \
   libxslt1-dev \

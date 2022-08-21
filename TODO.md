@@ -1,6 +1,7 @@
 # TODO
 - [ ] (1) Document each image with frontmatter + markdown
 - [x] Change all `local` sourced files to be `.local` instead of `-local`
+- [ ] (2) apt-lock for `apt-get install`'s in `Dockerfile` . For example, you pin every version in the installs and shit falls apart when there is a CVE (which is very good notifications). The fix would require a cache bust (no downstream apt-get updates), also forcing users to read about why it's happening.  `libpq5=14.5-0ubuntu0.22.04.1`
 
 # (1)
 Because frontmatter in markdown is yaml, we can use it to outline (and later, build a navigatable image registry with feature capabilities).

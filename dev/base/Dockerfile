@@ -2,6 +2,8 @@
 # escape=\
 FROM ubuntu:22.04
 
+RUN echo "2022-08-21 : I'm busting the cache because apt repositories changed enough to break a dependent image's apt-installs on new use of this" > /tmp/cache-buster
+
 # Install all the tools we want in all of our dev environments
 RUN \
   apt-get update && \
