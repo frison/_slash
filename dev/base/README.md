@@ -6,6 +6,6 @@ This container serves as the base for all other development containers. You can 
 
 |Mount Point|Feature|Usage|
 |-|-|-|
-|`/home/human/.zshrc-local`| Shell customizations | Sourced on login |
-|`/home/human/.zshrc-secrets`| Mounted environment variables | Sourced on login |
-|`/home/human/.vimrc-local`| Vim Customizations | Sourced on login |
+|`/home/human/.zshrc.local`| Shell customizations | Sourced on login |
+|`/home/human/.zshrc.secrets`| Mounted environment variables | Sourced on login |
+|`/home/human/.vimrc.local`| Vim Customizations | Sourced on login |

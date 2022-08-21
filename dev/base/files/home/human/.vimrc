@@ -67,7 +67,7 @@ set laststatus=2
 
 " If there are any machine-specific tweaks for Vim, load them from the following file.
 try 
-  source ~/.vimrc-local
+  source ~/.vimrc.local
 catch
   " No such file? No problem; just ignore it.
 endtry
