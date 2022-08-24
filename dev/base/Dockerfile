@@ -59,10 +59,10 @@ RUN \
 
 # Set home permissions and install oh-my-zsh 
 RUN \
-  chown -R human:human /home/human && \
   export ZSH=/home/human/.oh-my-zsh && \
   export ZDOTDIR=/home/human && \
-  /usr/local/ohmyzsh/tools/install.sh
+  /usr/local/ohmyzsh/tools/install.sh && \
+  chown -R human:human /home/human
 
 USER human
 WORKDIR /home/human
