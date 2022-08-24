@@ -95,12 +95,9 @@ plugins=(git python) # pylint npm pip
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-if [[ -f ~/.zshenv-secrets ]]; then
-  source ~/.zshenv.secrets
-fi
-
-if [[ -f ~/.zshrc-local ]]; then
-  source ~/.zshrc.local
-fi
+[[ -f ~/.zshrc.secrets ]] && source ~/.zshrc.secrets
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 source $ZSH/oh-my-zsh.sh
+
+[[ -f ~/.zshrc.prompt ]] && source ~/.zshrc.prompt
