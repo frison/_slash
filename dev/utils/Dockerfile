@@ -2,10 +2,9 @@
 # escape=\
 FROM dev-base:local
 
-RUN \
-  DEBIAN_FRONTEND='noninteractive' \
-  sudo -E apt-get install -y --no-install-recommends \
-  whois
+RUN sudo \
+  apk add \
+    nmap whois
 
 COPY ./files /
 

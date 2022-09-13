@@ -2,13 +2,15 @@
 # escape=\
 FROM dev-base:local
 
-# The base's software-properties-common package gets us most of the way
-# there by providing python 3.9.9
-RUN sudo apt-get install -y --no-install-recommends python3-pip
-RUN sudo ln -s /bin/python3 /bin/python
+RUN sudo \
+  apk add \
+    python3-dev py3-pip \
+    linux-headers gcc musl-dev
 
 COPY ./files /
 
+ENV PATH $HOME/.local/bin:$PATH
+
 RUN \
-  sudo pip install -r /requirements.txt && \
-  sudo pip install pytest
+  pip install -r /requirements.txt && \
+  pip install pytest

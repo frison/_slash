@@ -1,56 +1,24 @@
 # syntax=docker/dockerfile:1
 # escape=\
-FROM ubuntu:22.04
+FROM alpine:3.16
 
-RUN echo "2022-08-21 : I'm busting the cache because apt repositories changed enough to break a dependent image's apt-installs on new use of this" > /tmp/cache-buster
+# When there are upstream dependency changes that would not result
+# in a rebuild of the image, we can explain why we need a rebuild here.
+RUN echo "2022-09-08 : aint no cache busting yet" > /tmp/cache-buster
 
-# Install all the tools we want in all of our dev environments
-RUN \
-  apt-get update && \
-  apt-get upgrade -y && \
-  DEBIAN_FRONTEND='noninteractive' \
-  apt-get install -y --no-install-recommends \
-  build-essential \
-  ca-certificates \
-  curl \
-  dnsutils \
-  git \
-  inetutils-ping \
-  jq \
-  less \
-  locales \
-  man \
-  netcat \
-  openssh-client \
-  postgresql-client \
-  software-properties-common \
-  sudo \
-  tar \
-  unzip \
-  vim \
-  wget \
-  zsh
+RUN apk add --no-cache \
+    ca-certificates \
+    git \
+    curl wget \
+    openssh-client \
+    zsh \
+    sudo
 
-# Add the slash user with zsh shell and sudo + enable passwordless sudo
-RUN \
-  useradd --home-dir /home/human \
-          --shell /usr/bin/zsh  \
-          --create-home \
-          --groups sudo \
-          human \
-  && echo "# Allow members of group sudo to execute any command without a password" >> /etc/sudoers \
-  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-# Tools that aren't available in the package manager
-RUN \
-  wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
-  && chmod +x /usr/local/bin/yq
-
-# 11MB hurl.dev , a much better curl
-RUN \
-  wget -qO hurl_1.6.0_amd64.deb https://github.com/Orange-OpenSource/hurl/releases/download/1.6.0/hurl_1.6.0_amd64.deb \
-  && dpkg -i hurl_1.6.0_amd64.deb \
-  && rm hurl_1.6.0_amd64.deb
+# Create a group and user
+RUN addgroup -S human \
+    && adduser -S human -G human -G wheel -s zsh -h /home/human -D \
+    # All members of wheel group to sudo without password
+    && echo '%wheel ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 COPY ./files /
 RUN \
@@ -63,6 +31,10 @@ RUN \
   export ZDOTDIR=/home/human && \
   /usr/local/ohmyzsh/tools/install.sh && \
   chown -R human:human /home/human
+
+RUN apk add --no-cache \
+    yq jq \
+    vim
 
 USER human
 WORKDIR /home/human

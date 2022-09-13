@@ -1,3 +1,16 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
+# 
+# https://github.com/facebook/yoga/blob/572f525734f58aa36ce1a681f079c14a30eba617/scripts/android-setup.sh
 
-# Script for downloading
+download() {
+  if hash curl 2>/dev/null; then
+    curl -s -L -o "$2" "$1"
+  elif hash wget 2>/dev/null; then
+    wget -O "$2" "$1"
+  else
+    echo >&2 "No supported download tool installed. Please get either wget or curl."
+    exit
+  fi
+}
+
+download $1 $2

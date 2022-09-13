@@ -1,4 +1,4 @@
-SUBDIRS = base python rails node utils
+SUBDIRS = base python node rails utils
 
 .EXPORT_ALL_VARIABLES:
 

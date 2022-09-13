@@ -1,28 +1,15 @@
 # syntax=docker/dockerfile:1
 # escape=\
-FROM dev-base:local
+# Rails requires node, so we base this off our node image.
+FROM dev-node:local
 
 RUN \
-  DEBIAN_FRONTEND='noninteractive' \
-  sudo -E apt-get install -y --no-install-recommends \
-  git-core \
-  zlib1g-dev \
-  build-essential \
-  libssl-dev \
-  zlib1g-dev \
-  libreadline-dev \
-  libyaml-dev \
-  libsqlite3-dev \
-  libpq-dev \
-  libpq5 \
-  sqlite3 \
-  libxml2-dev \
-  libxslt1-dev \
-  libcurl4-openssl-dev \
-  software-properties-common \
-  libffi-dev \
-  nodejs \
-  yarn
+  sudo \
+  apk add \
+    # Rails build packages
+    curl-dev ruby-dev build-base bash \
+    # Rails gems
+    libpq-dev
 
 RUN \
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv \
@@ -37,9 +24,7 @@ RUN \
 
 RUN \
   gem install bundler \
-  && rbenv rehash \
-  && gem install rails -v 7.0.3 \
-  && rbenv rehash
+  && gem install rails -v 7.0.3
 
 RUN \
    curl https://cli-assets.heroku.com/install.sh | sh
