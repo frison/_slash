@@ -4,7 +4,7 @@ FROM alpine:3.16
 
 # When there are upstream dependency changes that would not result
 # in a rebuild of the image, we can explain why we need a rebuild here.
-RUN echo "2022-09-08 : aint no cache busting yet" > /tmp/cache-buster
+RUN echo "2022-10-04 : aint no cache busting yet" > /tmp/cache-buster
 
 RUN apk add --no-cache \
     ca-certificates \
