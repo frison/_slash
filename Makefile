@@ -7,6 +7,6 @@ build: $(SUBDIRS)
 clean: $(SUBDIRS)
 
 $(SUBDIRS):
-	$(MAKE) -C $@
+	$(MAKE) -C $@ ${MAKECMDGOALS}
 
 .PHONY: build clean $(SUBDIRS)

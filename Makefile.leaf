@@ -1,6 +1,3 @@
-.EXPORT_ALL_VARIABLES:
-IMAGE_TO_BUILD=dev-utils
-
 build:
 	@docker build . --tag $${IMAGE_TO_BUILD}:local
 

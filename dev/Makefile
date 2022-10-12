@@ -6,7 +6,9 @@ build: $(SUBDIRS)
 
 clean: $(SUBDIRS)
 
-$(SUBDIRS):
-	$(MAKE) -C $@
+upstream: $(SUBDIRS)
 
-.PHONY: build clean $(SUBDIRS)
+$(SUBDIRS):
+	$(MAKE) -C $@ ${MAKECMDGOALS} -f Makefile -f ${CURDIR}/../Makefile.leaf
+
+.PHONY: build clean upstream $(SUBDIRS)
