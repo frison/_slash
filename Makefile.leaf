@@ -8,4 +8,7 @@ upstream:
 	echo "FROM frison/$${IMAGE_TO_BUILD}:latest" > Dockerfile
 	rm -rf files/
 
+test:
+	echo "FROM frison/$${IMAGE_TO_BUILD}:latest"
+
 .PHONY: build clean upstream

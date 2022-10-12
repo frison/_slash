@@ -1,7 +1,5 @@
 SUBDIRS = base python node rails utils
 
-.EXPORT_ALL_VARIABLES:
-
 build: $(SUBDIRS)
 
 clean: $(SUBDIRS)
@@ -9,6 +7,7 @@ clean: $(SUBDIRS)
 upstream: $(SUBDIRS)
 
 $(SUBDIRS):
-	$(MAKE) -C $@ ${MAKECMDGOALS} -f Makefile -f ${CURDIR}/../Makefile.leaf
+	@$(MAKE) -C $@ ${MAKECMDGOALS} -f ${CURDIR}/../Makefile.leaf \
+		IMAGE_TO_BUILD=dev-$@
 
 .PHONY: build clean upstream $(SUBDIRS)
