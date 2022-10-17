@@ -2,6 +2,12 @@ lodash-slash (`_slash`) is a development environment bootstrapper. It allows you
 
 # Usage
 
+
+`make build` will build the container images for your development environment. This is a one-time operation, and you should only need to run it when you change the Dockerfile or any of their `files/` directory contents.
+`make clean` will delete all the container images.
+`make upstream` will swap the image building to using upstream images. It will also delete the `.git` directory. This is probably sketchy enough to do in a more obvious way.
+`make remote` will set the remote upstream backup for this directory.
+
 This project is designed to be used as a submodule of other projects. It does the following stuff not bad:
 - The source of all containers for the project
   - How the containers are built
