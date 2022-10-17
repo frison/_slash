@@ -3,4 +3,4 @@
 FROM dev-base:local
 
 RUN \
-  sudo apk add --no-cache nodejs
+  sudo apk add --no-cache nodejs npm
