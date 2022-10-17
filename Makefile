@@ -1,12 +1,12 @@
 SUBDIRS = dev services
 
-.EXPORT_ALL_VARIABLES:
-
 build: $(SUBDIRS)
 
 clean: $(SUBDIRS)
 
-$(SUBDIRS):
-	$(MAKE) -C $@ ${MAKECMDGOALS}
+upstream: $(SUBDIRS)
 
-.PHONY: build clean $(SUBDIRS)
+$(SUBDIRS):
+	@$(MAKE) -C $@ ${MAKECMDGOALS}
+
+.PHONY: build clean upstream $(SUBDIRS)
