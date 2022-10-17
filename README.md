@@ -1,3 +1,5 @@
+lodash-slash (`_slash`) is a development environment bootstrapper. It allows you to build (or utilize the upstreams) container images for your development environment, and then run them in a way that is easy to use and maintain.
+
 # Usage
 
 This project is designed to be used as a submodule of other projects. It does the following stuff not bad:
