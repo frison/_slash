@@ -4,8 +4,10 @@ build: $(SUBDIRS)
 
 clean: $(SUBDIRS)
 
+# We only support composite-dockerfiles to simplify multi-arch builds
+# because buildx can't publish manifests to local registries which means
+# no caching.
 composite-dockerfile: dev
-	@$(MAKE) -C $@ ${MAKECMDGOALS}
 
 upstream: dev
 	rm -rf .git
