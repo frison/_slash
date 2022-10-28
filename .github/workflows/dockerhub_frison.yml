@@ -29,6 +29,7 @@ jobs:
 
       - name: Publish Images
         run: |
+          docker buildx create --use
           tnp() {
             docker buildx build . -f Dockerfile.composite \
               --platform linux/amd64,linux/arm64 \

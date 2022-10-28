@@ -6,7 +6,7 @@ clean: $(SUBDIRS)
 
 # We only support composite-dockerfiles to simplify multi-arch builds
 # because buildx can't publish manifests to local registries which means
-# no caching.
+# we can't use the `FROM dev-base:local` statements.
 composite-dockerfile: dev
 
 upstream: dev
@@ -24,3 +24,14 @@ $(SUBDIRS):
 	@$(MAKE) -C $@ ${MAKECMDGOALS}
 
 .PHONY: build clean upstream $(SUBDIRS)
+
+# We release on tags starting with v
+release:
+	git tag v$(VERSION)
+	git push origin v$(VERSION)
+
+# Nuke the remote tag
+unrelease:
+	git tag -d v$(VERSION)
+	git push --delete origin v$(VERSION)
+
