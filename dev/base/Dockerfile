@@ -13,7 +13,8 @@ RUN apk add --no-cache \
     curl wget \
     openssh-client \
     zsh \
-    sudo
+    sudo \
+    postgresql-client tzdata
 
 # Create a group and user
 RUN addgroup -S human \

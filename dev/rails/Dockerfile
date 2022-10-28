@@ -11,13 +11,16 @@ RUN \
     # Rails gems
     libpq-dev
 
+ENV GEM_HOME="/usr/local/bundle"
 RUN \
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv \
   && echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc \
   && ~/.rbenv/bin/rbenv init - >> ~/.zshrc \
-  && git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  && git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build \
+  && sudo mkdir -p $GEM_HOME && sudo chmod 777 -R $GEM_HOME
 
-ENV PATH="$HOME/.rbenv/shims:$HOME/.rbenv/plugins/ruby-build/bin:$HOME/.rbenv/bin:$PATH"
+ENV PATH="$GEM_HOME/bin:$GEM_HOME/gems/bin:$HOME/.rbenv/shims:$HOME/.rbenv/plugins/ruby-build/bin:$HOME/.rbenv/bin:$PATH"
+
 RUN \
   rbenv install 3.1.2 \
   && rbenv global 3.1.2
@@ -30,4 +33,7 @@ RUN \
    curl https://cli-assets.heroku.com/install.sh | sh
 
 COPY ./files /
-RUN cd / && bundle install
+
+ 
+# Bundle install can mutate the Gemfile.lock, so we allow it to be modified.
+RUN sudo chmod 777 /Gemfile.lock && cd / && bundle install
