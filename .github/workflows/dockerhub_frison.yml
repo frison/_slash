@@ -27,9 +27,9 @@ jobs:
         run: |
           make composite-dockerfile
 
-     # Not using this action, encountered this
-     # https://github.com/crazy-max/ghaction-docker-buildx/issues/213
-     -  name: Set up Docker Buildx
+      # Not using this action, encountered this
+      # https://github.com/crazy-max/ghaction-docker-buildx/issues/213
+      - name: Set up Docker Buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v3
         with:
@@ -43,7 +43,7 @@ jobs:
               --platform linux/amd64,linux/arm64 \
               -t ${REPO}/$1:latest \
               -t ${REPO}/$1:${{ github.ref_name }} \
-              --push
+              --push \
               --target $1
           }
           tnp dev-base
