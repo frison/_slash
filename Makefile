@@ -11,6 +11,7 @@ composite-dockerfile: dev
 
 upstream: dev
 	rm -rf .git
+	rm -rf .github
 
 remote:
 	git init
