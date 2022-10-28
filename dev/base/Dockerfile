@@ -26,7 +26,7 @@ RUN \
   chmod +x /usr/local/bin/* && \
   chmod +x /entrypoint.sh
 
-# Set home permissions and install oh-my-zsh 
+# Set home permissions and install oh-my-zsh
 RUN \
   export ZSH=/home/human/.oh-my-zsh && \
   export ZDOTDIR=/home/human && \

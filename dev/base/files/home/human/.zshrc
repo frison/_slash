@@ -97,6 +97,8 @@ plugins=(git python) # pylint npm pip
 
 [[ -f ~/.zshrc.secrets ]] && source ~/.zshrc.secrets
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+[[ -f ~/.zshrc.project ]] && source ~/.zshrc.project
+[[ -f ~/.zshrc.project.local ]] && source ~/.zshrc.project.local
 
 source $ZSH/oh-my-zsh.sh
 

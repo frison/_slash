@@ -6,8 +6,11 @@ clean: $(SUBDIRS)
 
 upstream: $(SUBDIRS)
 
+composite-dockerfile: $(SUBDIRS)
+
 $(SUBDIRS):
 	@$(MAKE) -C $@ ${MAKECMDGOALS} -f ${CURDIR}/../Makefile.leaf \
-		IMAGE_TO_BUILD=dev-$@
+		IMAGE_TO_BUILD=dev-$@ \
+		COMPOSITE_DOCKERFILE_DIR=${CURDIR}/../
 
 .PHONY: build clean upstream $(SUBDIRS)

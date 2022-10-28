@@ -4,6 +4,9 @@ build: $(SUBDIRS)
 
 clean: $(SUBDIRS)
 
+composite-dockerfile: dev
+	@$(MAKE) -C $@ ${MAKECMDGOALS}
+
 upstream: dev
 	rm -rf .git
 
