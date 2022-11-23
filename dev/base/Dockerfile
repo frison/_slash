@@ -41,7 +41,7 @@ ENV HOSTNAME machine
 RUN \
   export ZSH=/home/human/.oh-my-zsh && \
   export ZDOTDIR=/home/human && \
-  /usr/local/ohmyzsh/tools/install.sh
+  /usr/local/ohmyzsh/tools/install.sh --keep-zshrc --unattended
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["zsh"]
