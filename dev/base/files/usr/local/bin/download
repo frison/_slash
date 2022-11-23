@@ -3,13 +3,20 @@
 # https://github.com/facebook/yoga/blob/572f525734f58aa36ce1a681f079c14a30eba617/scripts/android-setup.sh
 
 download() {
+  local url="$1"
+  local destination="$(basename $url)"
+
+  if [[ -n "$2" ]]; then
+    destination="$2"
+  fi
+
   if hash curl 2>/dev/null; then
-    curl -s -L -o "$2" "$1"
+    curl -s -L -o "$destination" "$url"
   elif hash wget 2>/dev/null; then
-    wget -O "$2" "$1"
+    wget -O "$destination" "$url"
   else
     echo >&2 "No supported download tool installed. Please get either wget or curl."
-    exit
+    return 1
   fi
 }
 

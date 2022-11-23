@@ -1,0 +1,55 @@
+#!/usr/bin/env sh
+# sudo download_verify_install "https://github.com/fluxcd/flux2/releases/download/v0.36.0/flux_0.36.0_linux_amd64.tar.gz" \
+#     ee576b7251e4ba2f50a685f3391999156505feda5f8e55e96b160903c14accf2 flux && \
+# sudo download_verify_install "https://get.helm.sh/helm-v3.10.2-linux-amd64.tar.gz" \
+#     2315941a13291c277dac9f65e75ead56386440d3907e0540bf157ae70f188347 helm && \
+# sudo download_verify_install "https://dl.k8s.io/v1.22.3/kubernetes-client-linux-amd64.tar.gz" \
+#     3f3d706163e142cf5ee8e6031b68e9a14236ce085bdfbaa5e8c1a599c15e5ee002248b7ed985a577307ceecb5cb531b9a399f1a4264e77d71597d569172a2ee6 kubectl sha512sum
+ 
+
+# Temp directory pattern inspired by https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
+WORK_DIR=`mktemp -d`
+
+# check if tmp dir was created
+if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
+  >&2 echo "Could not create temp dir"
+  exit 1
+fi
+
+# deletes the temp directory
+function cleanup {
+  rm -rf "$WORK_DIR"
+  echo "Deleted temp working directory $WORK_DIR"
+}
+# register the cleanup function to be called on the EXIT signal
+trap cleanup EXIT
+
+download_and_verify() {
+  cd $WORK_DIR
+  local url="$1"
+  local destination="downloaded_file"
+  local expected_sha="$2"
+  local binnable="$3"
+  local sha_tool="${4:-sha256sum}"
+  download "$url" "$destination"
+  (echo "$expected_sha  $destination" | $sha_tool -c) || {
+    >&2 echo "Checksum failed"
+    return 1;
+  }
+
+  tar -xzf $destination
+  local binnable_match_count=$(find . -type f -name "$binnable" | wc -l)
+  if [[ "$binnable_match_count" -gt 1 ]]; then
+    >&2 echo "Found more than one $binnable in $WORK_DIR, aborting"
+    return 2;
+  fi
+  local binnable_path=$(find . -type f -name "$binnable")
+  if [[ -z "$binnable_path" ]]; then
+    >&2 echo "Could not find $binnable in $WORK_DIR, aborting"
+    return 3;
+  fi
+  mv $binnable_path /usr/local/bin/$binnable
+  return 0;
+}
+
+download_and_verify $1 $2 $3 $4 $5 $6

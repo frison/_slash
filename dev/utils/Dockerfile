@@ -6,7 +6,4 @@ RUN sudo \
   apk add \
     nmap whois
 
-COPY ./files /
-
-RUN \
-  sudo chown -R human:human /home/human
+COPY --chown=human:human ./files /
