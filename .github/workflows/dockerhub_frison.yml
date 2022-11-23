@@ -40,6 +40,7 @@ jobs:
         run: |
           tnp() {
             docker buildx build . -f Dockerfile.composite \
+              --ulimit nofile=1024000:1024000 \
               --platform linux/amd64,linux/arm64 \
               -t ${REPO}/$1:latest \
               -t ${REPO}/$1:${{ github.ref_name }} \
