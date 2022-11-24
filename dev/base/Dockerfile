@@ -14,7 +14,8 @@ RUN apk add --no-cache \
     openssh-client \
     zsh \
     sudo \
-    postgresql-client tzdata
+    postgresql-client tzdata \
+    make
 
 RUN apk add --no-cache \
     yq jq \
