@@ -1,0 +1,34 @@
+name: "Dump Context"
+description: "Dump the GitHub Actions context"
+
+# Motivated from: https://github.com/product-os/flowzone/blob/master/.github/actions/always/action.yml
+# -
+#   name: Dump context
+#   uses: ./.github/actions/dump-context
+#   with:
+#     json: ${{ toJSON(inputs) }}
+#     secrets: ${{ toJSON(secrets) }}
+
+inputs:
+  json:
+    description: "JSON stringified object containing all the inputs from the calling workflow"
+    required: false
+    default: "Unspecified. Use `json: $${{ '{{' }} toJSON(inputs) ${{ '}}' }}` in the `with:` clause to dump the inputs"
+  secrets:
+    description: "JSON stringified object containing all the secrets from the calling workflow. Their values are redacted"
+    required: false
+    default: "Unspecified. Use `json: $${{ '{{' }} toJSON(secrets) ${{ '}}' }}` in the `with:` clause to dump the secrets"
+runs:
+  using: "composite"
+  steps:
+    -
+      name: Dump context
+      shell: bash
+      env:
+        INPUTS: ${{ inputs.json }}
+        SECRETS: ${{ inputs.secrets }}
+        GITHUB: ${{ toJSON(github) }}
+      run: |
+        echo "${INPUTS}"
+        echo "${SECRETS}"
+        echo "${GITHUB}"

@@ -1,0 +1,35 @@
+name: 🧪 Local GitHub Actions
+
+# (Name of the workflow)-(fully formed ref (ie. refs/heads/main,refs/tags/v10,refs/pull/<pr_number>/merge))
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+on:
+  push:
+    paths:
+      - '.github/workflows/test_actions.yml'
+      - '.github/actions/**'
+
+jobs:
+  test-dump-context:
+    name: 🧪 dump-context
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Check out repository
+        uses: actions/checkout@master
+
+      -
+        name: 🧪 dump-context with default values
+        uses: ./.github/actions/dump-context
+        continue-on-error: false
+
+      -
+        name: 🧪 dump-context with custom values
+        uses: ./.github/actions/dump-context
+        continue-on-error: false
+        with:
+          json: ${{ toJSON(inputs) }}
+          secrets: ${{ toJSON(secrets) }}
+

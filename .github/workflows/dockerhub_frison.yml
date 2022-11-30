@@ -1,4 +1,10 @@
 name: 🚀 To Dockerhub
+
+# (Name of the workflow)-(fully formed ref (ie. refs/heads/main,refs/tags/v10,refs/pull/<pr_number>/merge))
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     tags:
@@ -9,27 +15,41 @@ jobs:
     name:  🐳 Build and Publish Images
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      -
+        name: Checkout
+        uses: actions/checkout@master
 
       # https://github.com/docker/login-action
-      - name: Log into Dockerhub
+      -
+        name: Log into Dockerhub
         uses: docker/login-action@v2
         with:
           username:  ${{ secrets.DOCKER_USERNAME }}
           password:  ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build Compsite Dockerfile
+      -
+        name: Dump Context
+        uses: ./.github/actions/dump-context
+      # Add support for more platforms with QEMU (optional)
+      # https://github.com/docker/setup-qemu-action
+      # This is an architecture emulator that provides near-native speeds for multi-arch builds.
+      #
+      # The previous method used https://github.com/crazy-max/ghaction-docker-buildx
+      # which is now split between the below two actions.
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        platforms: arm64,amd64
+
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        platforms: linux/amd64,linux/arm64
+
+      -
+        name: Build Compsite Dockerfile
         run: |
           make composite-dockerfile
-
-      # Not using this action, encountered this
-      # https://github.com/crazy-max/ghaction-docker-buildx/issues/213
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: crazy-max/ghaction-docker-buildx@v3
-        with:
-          buildx-version: latest
-          qemu-version: latest
 
       - name: Publish Images
         run: |
