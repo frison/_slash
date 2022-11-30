@@ -5,7 +5,7 @@ escaped-relative-dir := $(shell echo ${relative-dir} | sed 's/\//\\\//g')
 build:
 	@docker build . --tag $${IMAGE_TO_BUILD}:local
 
-# Transforms `FROM (.*)` to `FROM (.*) AS IMAGE_TO_BUILD`
+# Transforms `FROM (.*)` to `FROM (.*) AS $IMAGE_TO_BUILD`
 # Transforms `FROM (.*):local (.*)` to `FROM (.*) AS (.*)`
 # Transforms `COPY ./(.*) (.*)` to `COPY ./${escaped-relative-dir}/(.*) (.*)`
 # Transforms `COPY --chown=(..) ./(.*) (.*)` to `COPY ./${escaped-relative-dir}/(.*) (.*)`
