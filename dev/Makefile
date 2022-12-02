@@ -1,4 +1,4 @@
-SUBDIRS = base python node rails utils
+SUBDIRS = base python node rails utils runner
 
 build: $(SUBDIRS)
 

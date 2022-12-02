@@ -1,0 +1,18 @@
+# syntax=docker/dockerfile:1
+# escape=\
+FROM dev-python:local
+
+RUN sudo \
+  apk add \
+    python3-dev py3-pip \
+    linux-headers gcc musl-dev
+
+COPY ./files /
+
+ENV PATH $HOME/.local/bin:$PATH
+
+RUN \
+  pip install -r /requirements.txt && \
+  pip install pytest
+
+ENTRYPOINT ["/entrypoint.sh"]

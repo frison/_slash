@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+function log() {
+  echo "[$(date)] $1"
+}
+
+function log_error() {
+  >&2 echo "[$(date)] $1"
+}
+
+function validate_env_exists() {
+  local var_name="$1"
+  local message="$2"
+
+  [[ -z "$var_value" ]] && {
+    log_error "$var_name is required $message"
+    exit 1
+  }
+}

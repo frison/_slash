@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+# Temp directory pattern inspired by https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
+export OLD_WORK_DIR=$WORK_DIR
+export WORK_DIR=`mktemp -d`
+
+# check if tmp dir was created
+if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
+  >&2 echo "Could not create temp dir"
+  exit 1
+fi
+
+# deletes the temp directory
+function cleanup {
+  local workdir=$1
+
+  (rm -rf "$workdir") || {
+    >&2 echo "Could not remove temp dir $workdir -- manual cleanup required"
+  }
+  echo "Deleted temp working directory $workdir"
+}
+
+# This captures the workdir in the closure so that even if the WORK_DIR is changed
+# the cleanup function will still be able to delete the correct directory
+trap "cleanup $WORK_DIR" EXIT

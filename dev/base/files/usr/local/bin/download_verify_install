@@ -7,22 +7,7 @@
 #     3f3d706163e142cf5ee8e6031b68e9a14236ce085bdfbaa5e8c1a599c15e5ee002248b7ed985a577307ceecb5cb531b9a399f1a4264e77d71597d569172a2ee6 kubectl sha512sum
  
 
-# Temp directory pattern inspired by https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
-WORK_DIR=`mktemp -d`
-
-# check if tmp dir was created
-if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
-  >&2 echo "Could not create temp dir"
-  exit 1
-fi
-
-# deletes the temp directory
-function cleanup {
-  rm -rf "$WORK_DIR"
-  echo "Deleted temp working directory $WORK_DIR"
-}
-# register the cleanup function to be called on the EXIT signal
-trap cleanup EXIT
+. /shell_utils/workdir
 
 download_and_verify() {
   cd $WORK_DIR
