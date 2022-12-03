@@ -5,7 +5,7 @@ FROM dev-base:local
 RUN sudo \
   apk add \
     python3-dev py3-pip \
-    linux-headers gcc musl-dev
+    linux-headers gcc g++ musl-dev
 
 COPY ./files /
 
