@@ -7,8 +7,6 @@
 # :local tags.
 #
 # It is assumed there are no dependencies between the non-base containers.
-#
-# This file is designed to be placed in each directory until I figure out how to reuse it
 BASE_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d -regextype sed -regex '[0-9]{3}-.*' | sort)
 PUBLISH_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d | sort | grep -v '[0-9]{3}-.*')
 IMAGE_PREFIX = $(notdir ${CURDIR})
@@ -25,10 +23,6 @@ clean: $(SUBDIRS)
 upstream: $(SUBDIRS)
 
 composite-dockerfile: $(SUBDIRS)
-
-test:
-	echo ${SUBDIRS}
-	echo ${IMAGE_PREFIX}
 
 $(SUBDIRS):
 	@$(MAKE) -C $@ ${MAKECMDGOALS} -f ${CURDIR}/../Makefile.leaf \

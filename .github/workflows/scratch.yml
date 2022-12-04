@@ -11,6 +11,7 @@ on:
       - 'v*'
     paths:
       - 'scratch/**'
+      - '.github/workflows/scratch.yml'
 
 jobs:
   dockerhub:
@@ -37,7 +38,7 @@ jobs:
         with:
           dockerhub-username: ${{ secrets.DOCKER_USERNAME }}
           dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
-          dockerfile: ./Dockerfile.dev
+          dockerfile: ./Dockerfile.scratch
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
 
