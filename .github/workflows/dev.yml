@@ -26,10 +26,8 @@ jobs:
         include:
           - target: 'dev-python'
             platforms: 'linux/amd64,linux/arm64'
-        include:
           - target: 'dev-node'
             platforms: 'linux/amd64'
-        include:
           - target: 'dev-rails'
             platforms: 'linux/amd64'
 
