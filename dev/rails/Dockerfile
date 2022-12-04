@@ -1,11 +1,13 @@
 # syntax=docker/dockerfile:1
 # escape=\
 # Rails requires node, so we base this off our node image.
-FROM dev-node:local
+FROM dev-100-node:local
 
 RUN \
   sudo \
-  apk add \
+  apk add --no-cache \
+    # Node is needed for rails
+    nodejs npm \
     # Rails build packages
     curl-dev ruby-dev build-base bash \
     # Rails gems
@@ -34,6 +36,6 @@ RUN \
 
 COPY ./files /
 
- 
+
 # Bundle install can mutate the Gemfile.lock, so we allow it to be modified.
 RUN sudo chmod 777 /Gemfile.lock && cd / && bundle install

@@ -1,0 +1,86 @@
+name: "Publish Image to Dockerhub"
+description: "Publish to dockerhub with multiplatform support"
+
+inputs:
+  dockerhub-username:
+    description: "The dockerhub username to authenticate with and push the image to"
+    required: true
+  dockerhub-token:
+    description: "The dockerhub token to authenticate with and push the image to"
+    required: true
+  dockerfile:
+    description: "The dockerfile to build the image from"
+    required: true
+  platforms:
+    description: "The platforms to build the image for"
+    required: true
+  build-target:
+    description: "The build target to build the image for"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    # https://github.com/docker/login-action
+    -
+      name: 🗝 Log into Dockerhub
+      uses: docker/login-action@v2
+      with:
+        username:  ${{ inputs.dockerhub-username }}
+        password:  ${{ inputs.dockerhub-token }}
+
+    # https://github.com/docker/metadata-action
+    -
+      name: 🐳 Generate Metadata
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: |
+          ${{ inputs.dockerhub-username }}/${{ inputs.build-target }}
+        tags: |
+          # Always push 'latest' tags for latest commit into default branch
+          type=raw,value=latest,priority=700,enable={{is_default_branch}}
+          # Always push 'experimental' tag for latest commit in any branch
+          type=raw,value=experimental,priority=500
+          # If you push a tag, use the same tag on the image
+          type=ref,enable=true,priority=600,prefix=,suffix=,event=tag
+
+    # Add support for more platforms with QEMU (optional)
+    # https://github.com/docker/setup-qemu-action
+    # This is an architecture emulator that provides near-native speeds for multi-arch builds.
+    #
+    # The previous method used https://github.com/crazy-max/ghaction-docker-buildx
+    # which is now split between the below two actions.
+    -
+      name: 🛠 Set up QEMU
+      uses: docker/setup-qemu-action@v2
+      with:
+        platforms: ${{ inputs.platforms }}
+
+    -
+      name: 🛠 Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+      with:
+        platforms: ${{ inputs.platforms }}
+
+    -
+      name: 🔨 Generate dockerfile
+      shell: bash
+      run: |
+        make composite-dockerfile
+
+    -
+      name: 🔨🚀🐳 ${{ inputs.build-target }} (${{ inputs.platforms }})
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        file: ${{ inputs.dockerfile }}
+        platforms: ${{ inputs.platforms }}
+        target: ${{ inputs.build-target }}
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        cache-to: |
+          type=gha
+        cache-from: |
+          type=gha,mode=max
+          type=registry,ref=${{ inputs.dockerhub-username }}/${{ inputs.build-target }}:latest,mode=max
+
