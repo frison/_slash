@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
 
 function log() {
-  echo "[$(date --iso-8601=seconds --utc)] $1"
+  echo "[$(date)] $1"
 }
 
 function log_error() {
-  >&2 echo "[$(date --iso-8601=seconds --utc)] $1"
+  >&2 echo "[$(date)] $1"
 }
 
 function validate_env_exists() {
