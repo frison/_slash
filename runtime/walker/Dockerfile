@@ -3,7 +3,7 @@
 FROM frison/scratch-scripts:latest AS scripts
 FROM runtime-000-base:local
 
-COPY /artifacts /
+COPY ./artifacts /
 RUN pip install -r /requirements.txt
 
 COPY ./files /
