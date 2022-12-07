@@ -7,8 +7,6 @@ concurrency:
 
 on:
   push:
-    tags:
-      - 'v*'
     paths:
       - 'runtime/**'
       - '.github/workflows/runtime.yml'
