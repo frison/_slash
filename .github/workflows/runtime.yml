@@ -3,7 +3,7 @@ name: 🚀 Runtime To Dockerhub
 # (Name of the workflow)-(fully formed ref (ie. refs/heads/main,refs/tags/v10,refs/pull/<pr_number>/merge))
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 on:
   push:
@@ -36,6 +36,6 @@ jobs:
         with:
           dockerhub-username: ${{ secrets.DOCKER_USERNAME }}
           dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
-          dockerfile: ./Dockerfile.scratch
+          dockerfile: ./Dockerfile.runtime
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
