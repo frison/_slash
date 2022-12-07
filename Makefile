@@ -1,4 +1,4 @@
-SUBDIRS = scratch dev
+SUBDIRS = scratch runtime dev
 
 build: $(SUBDIRS)
 
