@@ -1,11 +1,12 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 . /shell_utils/core
 
 validate_env_exists "SSH_PRIVATE_KEY" "to access the git repo"
 validate_env_exists "WALKER_GIT_REPO" "to checkout the walker repo"
-validate_env_exists "WALKER_GIT_SHA" "to checkout the desired version of the walker repo"
-validate_env_exists "WALKER_ENTRYPOINT" "to run the walker"
+validate_env_exists "WALKER_GIT_REF" "to checkout the desired version of the walker repo"
+
+export WALKER_UPSTREAM_HOST=${WALKER_UPSTREAM_HOST:-"ofthemachine-curation.herokuapp.com"}
 export WALKER_STEP_INTERVAL=${WALKER_STEP_INTERVAL:-5}
 
 . /shell_utils/workdir
@@ -22,15 +23,19 @@ git remote add origin $WALKER_GIT_REPO
 
 # Skipping host checking would require adding github to known hosts prior to checkout
 # Which is doable, but not worth the effort atm
-GIT_SSH_COMMAND="ssh -i $SSH_PRIVATE_KEY_PATH -o StrictHostKeyChecking=no" git fetch --depth 1 origin $WALKER_GIT_SHA
+GIT_SSH_COMMAND="ssh -i $SSH_PRIVATE_KEY_PATH -o StrictHostKeyChecking=no" git fetch --depth 1 origin $WALKER_GIT_REF
 
 # Want to nuke this to prevent exfil of the private key from walkers
 rm $SSH_PRIVATE_KEY_PATH
+unset SSH_PRIVATE_KEY
+
+# We fetched it, now we check it out.
+git checkout $WALKER_GIT_REF
+
+trap "STOP=1" SIGINT SIGTERM
 
 # Start the first process
-while [ $STOP -eq 0 ]; do
-    sh -c "$WALKER_ENTRYPOINT"
+while [[ $STOP -eq 0 ]]; do
+    sh -c "$@"
     sleep $WALKER_STEP_INTERVAL
 done
-
-echo "got stopped"

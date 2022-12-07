@@ -1,5 +1,0 @@
-# Required for attaching vscode debugger to python
-ipykernel
-openai
-simplejson
-pyfiglet

@@ -1,0 +1,45 @@
+name: 🚀 Runtime To Dockerhub
+
+# (Name of the workflow)-(fully formed ref (ie. refs/heads/main,refs/tags/v10,refs/pull/<pr_number>/merge))
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    tags:
+      - 'v*'
+    paths:
+      - 'runtime/**'
+      - '.github/workflows/runtime.yml'
+
+jobs:
+  dockerhub:
+    name:  🐳 ${{ matrix.target }} (${{ matrix.platforms }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        target:
+          - 'runtime-walker'
+        include:
+          - target: 'runtime-walker'
+            platforms: 'linux/arm64'
+
+    steps:
+      -
+        name: 🛒 Checkout
+        uses: actions/checkout@master
+
+      -
+        name: 🎬 Publish Image
+        uses: ./.github/actions/publish-image
+        continue-on-error: false
+        with:
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
+          dockerfile: ./Dockerfile.scratch
+          platforms: ${{ matrix.platforms }}
+          build-target: ${{ matrix.target }}
+
+
