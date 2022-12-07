@@ -41,5 +41,3 @@ jobs:
           dockerfile: ./Dockerfile.scratch
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
-
-
