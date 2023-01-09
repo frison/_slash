@@ -29,6 +29,7 @@ pull() {
 
   # We fetched it, now we check it out.
   git checkout $WALKER_GIT_REF
+  git clean --force -dx
 }
 
 pull
