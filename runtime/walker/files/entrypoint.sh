@@ -27,8 +27,12 @@ pull() {
   # Which is doable, but not worth the effort atm
   GIT_SSH_COMMAND="ssh -i $SSH_PRIVATE_KEY_PATH -o StrictHostKeyChecking=no" git fetch --depth 1 origin $WALKER_GIT_REF
 
+  # If the refs are branches, we need to nuke them or things will look like they've diverged and the checkout
+  # will fail.
+  git for-each-ref --format '%(refname:short)' refs/heads | xargs git branch -D || true
   # We fetched it, now we check it out.
   git checkout $WALKER_GIT_REF
+  git checkout -b walker-$(date +%s)
   git clean --force -dx
 }
 
