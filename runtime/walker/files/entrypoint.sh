@@ -43,7 +43,7 @@ pull
 # so the walker can update itself
 #
 # rm $SSH_PRIVATE_KEY_PATH
-# unset SSH_PRIVATE_KEY
+unset SSH_PRIVATE_KEY
 
 
 trap "STOP=1" SIGINT SIGTERM
