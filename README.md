@@ -2,11 +2,10 @@ lodash-slash (`_slash`) is a development environment bootstrapper. It allows you
 
 # Usage
 
-
-`make build` will build the container images for your development environment. This is a one-time operation, and you should only need to run it when you change the Dockerfile or any of their `files/` directory contents.
-`make clean` will delete all the container images.
-`make upstream` will swap the image building to using upstream images. It will also delete the `.git` directory. This is probably sketchy enough to do in a more obvious way.
-`make remote` will set the remote upstream backup for this directory.
+- `make build` - will build the container images for your development environment. This is a one-time operation, and you should only need to run it when you change the Dockerfile or any of their `files/` directory contents.
+- `make clean` - will delete all the container images.
+- `make upstream` - will swap the image building to using upstream images. **It will also delete the `.git` directory.** This is probably sketchy enough to do in a more obvious way.
+- `make remote` - will set the remote upstream backup for this directory.
 
 This project is designed to be used as a submodule of other projects. It does the following stuff not bad:
 - The source of all containers for the project
@@ -60,7 +59,7 @@ docker-compose run [python-cli|rails-cli|...]
 
 # Making changes
 
-environments/docker-compose.yml
-    - You must make an .env file in the parent of the root directory
-services/data/docker-compose.yml
-    - env_file should not be parent of the project root while making changes, or you should make one in your project root parent
+|File|Tips|
+|--|--|
+|`environments/docker-compose.yml`|You must make an .env file in the parent of the root directory|
+|`services/data/docker-compose.yml`|env_file should not be parent of the project root while making changes, or you should make one in your project root parent|
