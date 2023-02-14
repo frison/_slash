@@ -36,6 +36,6 @@ jobs:
         with:
           dockerhub-username: ${{ secrets.DOCKER_USERNAME }}
           dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
-          dockerfile: ./Dockerfile.runtime
+          dockerfile: ./Dockerfile.composite.runtime
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}

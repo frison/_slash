@@ -38,7 +38,7 @@ jobs:
         with:
           dockerhub-username: ${{ secrets.DOCKER_USERNAME }}
           dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
-          dockerfile: ./Dockerfile.scratch
+          dockerfile: ./Dockerfile.composite.scratch
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
 

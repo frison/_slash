@@ -3,11 +3,13 @@ SUBDIRS = scratch runtime dev
 build: $(SUBDIRS)
 
 clean: $(SUBDIRS)
+clean-composite-dockerfile:
+	rm -f Dockerfile.composite.*
 
 # We only support composite-dockerfiles to simplify multi-arch builds
 # because buildx can't publish manifests to local registries which means
 # we can't use the `FROM dev-base:local` statements.
-composite-dockerfile: $(SUBDIRS)
+composite-dockerfile: clean-composite-dockerfile $(SUBDIRS)
 
 upstream: dev
 	rm -rf .git

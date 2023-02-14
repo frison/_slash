@@ -44,7 +44,7 @@ jobs:
         with:
           dockerhub-username: ${{ secrets.DOCKER_USERNAME }}
           dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
-          dockerfile: ./Dockerfile.dev
+          dockerfile: ./Dockerfile.composite.dev
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
 
