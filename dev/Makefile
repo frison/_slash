@@ -11,23 +11,23 @@ DIR_NAME := $(notdir ${CURDIR})
 BASE_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d -regextype sed -regex '.*[0-9]\{3\}.*' | sort)
 PUBLISHED_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d | sort | grep -v '[0-9]\{3\}-.*')
 IMAGE_PREFIX = ${DIR_NAME}
-SUBDIRS = $(notdir ${BASE_CONTAINERS} ${PUBLISHED_CONTAINERS})
 BASE_SUBDIRS = $(notdir ${BASE_CONTAINERS})
 PUBLISHED_SUBDIRS = $(notdir ${PUBLISHED_CONTAINERS})
 
 # Phony targets are targets that don't reference files; they are just commands -- some just happened to be named after
 # subdirectories.
-.PHONY: build clean upstream composite-dockerfile base $(SUBDIRS)
+.PHONY: build clean upstream composite-dockerfile base $(BASE_SUBDIRS) $(PUBLISHED_SUBDIRS)
 
 $(DIR_NAME): build
-build: $(SUBDIRS)
+build: $(BASE_SUBDIRS) $(PUBLISHED_SUBDIRS)
 
-clean: $(SUBDIRS)
+# Clean in reverse-order to minimize forced image deletions because of depentent images.
+clean: $(PUBLISHED_SUBDIRS) $(BASE_SUBDIRS)
 
 upstream: $(PUBLISHED_SUBDIRS)
 	@rm -rf $(BASE_CONTAINERS)
 
-composite-dockerfile: $(SUBDIRS)
+composite-dockerfile: $(PUBLISHED_SUBDIRS) $(BASE_SUBDIRS)
 
 base: $(BASE_SUBDIRS)
 
@@ -37,7 +37,7 @@ $(BASE_SUBDIRS):
 		COMPOSITE_DOCKERFILE_DIR=${CURDIR}/../ \
 		COMPOSITE_DOCKERFILE=Dockerfile.${IMAGE_PREFIX}
 
-$(PUBLISHED_SUBDIRS): base
+$(PUBLISHED_SUBDIRS): $(BASE_SUBDIRS)
 	@$(MAKE) -C $@ ${MAKECMDGOALS} -f ${CURDIR}/../Makefile.leaf.mk \
 		IMAGE_TO_BUILD=${IMAGE_PREFIX}-$@ \
 		COMPOSITE_DOCKERFILE_DIR=${CURDIR}/../ \

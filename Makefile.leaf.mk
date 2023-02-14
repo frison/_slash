@@ -7,14 +7,16 @@ ESCAPED_PROJECT_RELATIVE_DIR := $(shell echo ${PROJECT_RELATIVE_DIR} | sed 's/\/
 PUBLISHED_CONTAINERS = $(shell find ${ABSOLUTE_PARENT_DIR} -mindepth 1 -maxdepth 1 -type d | sort | grep -v '[0-9]\{3\}-.*')
 PUBLISHED_SUBDIRS = $(notdir ${PUBLISHED_CONTAINERS})
 
+# Phony targets are targets that don't reference files; they are just commands -- some just happened to be named after
+# subdirectories.
+.PHONY: build clean upstream ${DIR_NAME} ${PARENT_DIR} $(PUBLISHED_SUBDIRS) leaf-target base
+
 build:
 	@docker build . --tag $${IMAGE_TO_BUILD}:local
 
 ${DIR_NAME}: build
 ${PARENT_DIR}: build
-	@echo "Building ${PARENT_DIR}"
 $(PUBLISHED_SUBDIRS): build
-
 base: build
 
 # Transforms `FROM ([^/]*)` to `FROM (.*) AS $IMAGE_TO_BUILD`
@@ -44,5 +46,3 @@ clean:
 upstream:
 	@echo "FROM frison/$${IMAGE_TO_BUILD}:latest" > Dockerfile
 	rm -rf !Dockerfile
-
-.PHONY: build clean upstream
