@@ -7,25 +7,36 @@
 # :local tags.
 #
 # It is assumed there are no dependencies between the non-base containers.
-BASE_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d -regextype sed -regex '[0-9]{3}-.*' | sort)
-PUBLISH_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d | sort | grep -v '[0-9]{3}-.*')
+BASE_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d -regextype sed -regex '.*[0-9]\{3\}.*' | sort)
+PUBLISHED_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d | sort | grep -v '[0-9]\{3\}-.*')
 IMAGE_PREFIX = $(notdir ${CURDIR})
-SUBDIRS = $(notdir ${BASE_CONTAINERS}+${PUBLISH_CONTAINERS})
+SUBDIRS = $(notdir ${BASE_CONTAINERS} ${PUBLISHED_CONTAINERS})
+BASE_SUBDIRS = $(notdir ${BASE_CONTAINERS})
+PUBLISHED_SUBDIRS = $(notdir ${PUBLISHED_CONTAINERS})
 
 # Phony targets are targets that don't reference files; they are just commands -- some just happened to be named after
 # subdirectories.
-.PHONY: build clean upstream composite-dockerfile $(SUBDIRS)
+.PHONY: build clean upstream composite-dockerfile base $(SUBDIRS)
 
 build: $(SUBDIRS)
 
 clean: $(SUBDIRS)
 
-upstream: $(SUBDIRS)
+upstream: $(PUBLISHED_SUBDIRS)
+	@rm -rf $(BASE_CONTAINERS)
 
 composite-dockerfile: $(SUBDIRS)
 
-$(SUBDIRS):
-	@$(MAKE) -C $@ ${MAKECMDGOALS} -f ${CURDIR}/../Makefile.leaf \
+base: $(BASE_SUBDIRS)
+
+$(BASE_SUBDIRS):
+	@$(MAKE) -C $@ ${MAKECMDGOALS} -f ${CURDIR}/../Makefile.leaf.mk \
+		IMAGE_TO_BUILD=${IMAGE_PREFIX}-$@ \
+		COMPOSITE_DOCKERFILE_DIR=${CURDIR}/../ \
+		COMPOSITE_DOCKERFILE=Dockerfile.${IMAGE_PREFIX}
+
+$(PUBLISHED_SUBDIRS): base
+	@$(MAKE) -C $@ ${MAKECMDGOALS} -f ${CURDIR}/../Makefile.leaf.mk \
 		IMAGE_TO_BUILD=${IMAGE_PREFIX}-$@ \
 		COMPOSITE_DOCKERFILE_DIR=${CURDIR}/../ \
 		COMPOSITE_DOCKERFILE=Dockerfile.${IMAGE_PREFIX}

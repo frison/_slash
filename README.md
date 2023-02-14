@@ -63,3 +63,8 @@ docker-compose run [python-cli|rails-cli|...]
 |--|--|
 |`environments/docker-compose.yml`|You must make an .env file in the parent of the root directory|
 |`services/data/docker-compose.yml`|env_file should not be parent of the project root while making changes, or you should make one in your project root parent|
+
+
+```
+git log --pretty=format:'%h' path/to/subdirectory
+```
