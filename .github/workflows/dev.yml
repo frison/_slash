@@ -6,12 +6,16 @@ concurrency:
   cancel-in-progress: true
 
 on:
+  schedule:
+    # 9am daily UTC
+    - cron: "0 9 * * *"
   push:
     tags:
       - 'v*'
     paths:
       - 'dev/**'
       - '.github/workflows/dev.yml'
+    workflow_dispatch:
 
 jobs:
   dockerhub:

@@ -52,7 +52,7 @@ runs:
           ${{ inputs.dockerhub-username }}/${{ env.image }}
         tags: |
           # Always push 'latest' tags for latest commit into default branch
-          type=raw,value=latest,prefix=${{ env.tag_prefix }}-,priority=700,enable={{is_default_branch}}
+          type=raw,value==${{ env.tag_prefix }}-latest,priority=700,enable={{is_default_branch}}
           # Always push 'edge' tag for latest commit in any branch
           type=raw,value=edge,prefix=${{ env.tag_prefix }}-,priority=500
           # If you push a tag, use the same tag on the image
