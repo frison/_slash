@@ -22,6 +22,7 @@ jobs:
           - 'runtime-walker'
         include:
           - target: 'runtime-walker'
+            image: 'runtime:walker'
             platforms: 'linux/arm64'
 
     steps:

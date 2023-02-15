@@ -26,10 +26,13 @@ jobs:
           - 'dev-rails'
         include:
           - target: 'dev-python'
+            image: 'dev:python'
             platforms: 'linux/amd64,linux/arm64'
           - target: 'dev-node'
+            image: 'dev:node'
             platforms: 'linux/amd64'
           - target: 'dev-rails'
+            image: 'dev:rails'
             platforms: 'linux/amd64'
 
     steps:
