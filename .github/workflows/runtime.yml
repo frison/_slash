@@ -22,7 +22,6 @@ jobs:
           - 'runtime-walker'
         include:
           - target: 'runtime-walker'
-            image: 'runtime:walker'
             platforms: 'linux/arm64'
 
     steps:
@@ -40,4 +39,3 @@ jobs:
           dockerfile: ./Dockerfile.composite.runtime
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
-          image: ${{ matrix.image }}

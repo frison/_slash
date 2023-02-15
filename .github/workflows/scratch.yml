@@ -24,7 +24,6 @@ jobs:
           - 'scratch-scripts'
         include:
           - target: 'scratch-scripts'
-            image: 'scratch:scripts'
             platforms: 'linux/amd64,linux/arm64'
 
     steps:
@@ -42,5 +41,3 @@ jobs:
           dockerfile: ./Dockerfile.composite.scratch
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
-          image: ${{ matrix.image }}
-
