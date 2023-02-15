@@ -8,7 +8,7 @@
 # Note: It is assumed there are no dependencies between the non-base containers.
 
 DIR_NAME := $(notdir ${CURDIR})
-BASE_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d -regextype sed -regex '.*[0-9]\{3\}.*' | sort)
+BASE_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d | grep '.*[0-9]\{3\}.*' | sort)
 PUBLISHED_CONTAINERS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d | sort | grep -v '[0-9]\{3\}-.*')
 IMAGE_PREFIX = ${DIR_NAME}
 BASE_SUBDIRS = $(notdir ${BASE_CONTAINERS})
