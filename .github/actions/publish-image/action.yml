@@ -39,9 +39,8 @@ runs:
 
         # Splits the build target and uses everything but the tag prefix as the image name
         # ie. 'dev-rails-71' -> 'dev-rails'
-        # but not echo "${{ inputs.build-target }}" | awk -F'-' '{$NF=""; print $0}' >> $GITHUB_ENV
         echo -n "image=" >> $GITHUB_ENV
-        echo "${{ inputs.build-target }}" | awk -F'-' '{$NF=""; print $0}' | sed 's/ /-/' >> $GITHUB_ENV
+        echo "${{ inputs.build-target }}" | awk -F'-' '{$NF=""; print $0}' | sed 's/ $//' | sed 's/ /-/' >> $GITHUB_ENV
 
     # https://github.com/docker/metadata-action
     -
