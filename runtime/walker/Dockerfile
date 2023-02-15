@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # escape=\
-FROM frison/scratch-scripts:latest AS scripts
+FROM frison/scratch:scripts AS scripts
 FROM runtime-000-base:local
 
 COPY ./artifacts /
