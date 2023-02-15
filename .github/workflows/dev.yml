@@ -50,5 +50,6 @@ jobs:
           dockerfile: ./Dockerfile.composite.dev
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
+          image: ${{ matrix.image }}
 
 

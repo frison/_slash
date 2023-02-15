@@ -40,3 +40,4 @@ jobs:
           dockerfile: ./Dockerfile.composite.runtime
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
+          image: ${{ matrix.image }}

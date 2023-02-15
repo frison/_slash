@@ -42,5 +42,5 @@ jobs:
           dockerfile: ./Dockerfile.composite.scratch
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
-
+          image: ${{ matrix.image }}
 
