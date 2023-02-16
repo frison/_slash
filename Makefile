@@ -11,7 +11,7 @@ clean-composite-dockerfile:
 # we can't use the `FROM dev-base:local` statements.
 composite-dockerfile: clean-composite-dockerfile $(SUBDIRS)
 
-upstream: dev
+upstream: $(SUBDIRS)
 	rm -rf .git
 	rm -rf .github
 
@@ -21,6 +21,10 @@ remote:
 	git fetch origin main
 	git reset --soft origin/main
 	git add .
+
+remote-clean: remote
+	git restore --staged .
+	git checkout .
 
 $(SUBDIRS):
 	@$(MAKE) -C $@ ${MAKECMDGOALS}

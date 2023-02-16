@@ -44,5 +44,5 @@ clean:
 	@docker rmi --force $${IMAGE_DIRECTORY}-$${TAG_DIRECTORY}:local || true
 
 upstream:
+	@rm -rf *
 	@echo "FROM frison/$${IMAGE_DIRECTORY}-$${TAG_DIRECTORY}" > Dockerfile
-	rm -rf !Dockerfile
