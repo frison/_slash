@@ -1,7 +1,7 @@
-SUBDIRS = scratch runtime dev
+IMAGE_ABSOLUTE_PATHS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d | grep -v '\.[a-zA-Z0-9]*$$' | sort)
+SUBDIRS = $(notdir ${IMAGE_ABSOLUTE_PATHS})
 
 build: $(SUBDIRS)
-
 clean: $(SUBDIRS)
 clean-composite-dockerfile:
 	rm -f Dockerfile.composite.*

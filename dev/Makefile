@@ -1,3 +1,5 @@
+##
+# Version: 1.0 (2023-02-16)
 # Usage:
 #   `make [folder]`  - will build the docker image for the folder, including it's dependent containers assuming
 #                      they of the form `[0-9]{3}-[a-z]+`. They will be built in lexical order. This image will
