@@ -24,7 +24,8 @@ remote:
 
 remote-clean: remote
 	git restore --staged .
-	git checkout .
+	git checkout -- .
+	git checkout main
 
 $(SUBDIRS):
 	@$(MAKE) -C $@ ${MAKECMDGOALS}

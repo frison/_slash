@@ -45,4 +45,4 @@ clean:
 
 upstream:
 	@rm -rf *
-	@echo "FROM frison/$${IMAGE_DIRECTORY}-$${TAG_DIRECTORY}" > Dockerfile
+	@echo "FROM frison/$${IMAGE_DIRECTORY}:$${TAG_DIRECTORY}" > Dockerfile
