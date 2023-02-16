@@ -1,0 +1,50 @@
+name: 🚀 Services To Dockerhub
+
+# (Name of the workflow)-(fully formed ref (ie. refs/heads/main,refs/tags/v10,refs/pull/<pr_number>/merge))
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  schedule:
+    # 9am daily UTC
+    - cron: "0 9 * * *"
+  push:
+    tags:
+      - 'v*'
+    paths:
+      - 'services/**'
+      - '.github/workflows/services.yml'
+  workflow_dispatch:
+
+jobs:
+  dockerhub:
+    name:  🐳 ${{ matrix.target }} (${{ matrix.platforms }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        target:
+          - 'services-postgres'
+          - 'services-pgadmin4'
+        include:
+          - target: 'services-postgres'
+            platforms: 'linux/amd64'
+          - target: 'services-pgadmin4'
+            platforms: 'linux/amd64'
+
+    steps:
+      -
+        name: 🛒 Checkout
+        uses: actions/checkout@master
+
+      -
+        name: 🎬 Publish Image
+        uses: ./.github/actions/publish-image
+        continue-on-error: false
+        with:
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
+          dockerfile: ./Dockerfile.composite.scratch
+          platforms: ${{ matrix.platforms }}
+          build-target: ${{ matrix.target }}
