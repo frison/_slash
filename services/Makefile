@@ -1,5 +1,5 @@
 ##
-# Version: 1.0 (2023-02-16)
+# Version: 1.1 (2023-02-16)
 # Usage:
 #   `make [folder]`  - will build the docker image for the folder, including it's dependent containers assuming
 #                      they of the form `[0-9]{3}-[a-z]+`. They will be built in lexical order. This image will
@@ -35,12 +35,14 @@ base: $(BASE_SUBDIRS)
 
 $(BASE_SUBDIRS):
 	@$(MAKE) -C $@ ${MAKECMDGOALS} -f ${CURDIR}/../Makefile.leaf.mk \
-		IMAGE_TO_BUILD=${IMAGE_PREFIX}-$@ \
+		IMAGE_DIRECTORY=${IMAGE_PREFIX} \
+		TAG_DIRECTORY=$@ \
 		COMPOSITE_DOCKERFILE_DIR=${CURDIR}/../ \
 		COMPOSITE_DOCKERFILE=Dockerfile.composite.${IMAGE_PREFIX}
 
 $(PUBLISHED_SUBDIRS): $(BASE_SUBDIRS)
 	@$(MAKE) -C $@ ${MAKECMDGOALS} -f ${CURDIR}/../Makefile.leaf.mk \
-		IMAGE_TO_BUILD=${IMAGE_PREFIX}-$@ \
+		IMAGE_DIRECTORY=${IMAGE_PREFIX} \
+		TAG_DIRECTORY=$@ \
 		COMPOSITE_DOCKERFILE_DIR=${CURDIR}/../ \
 		COMPOSITE_DOCKERFILE=Dockerfile.composite.${IMAGE_PREFIX}
