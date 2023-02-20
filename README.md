@@ -1,4 +1,4 @@
-lodash-slash (`_slash`) is a development environment bootstrapper. It allows you to build (or utilize the upstreams) container images for your development environment, and then run them in a way that is easy to use and maintain.
+lodash-slash (`_slash`) is a development environment bootstrapper and image publishing framework. It allows you to build (or utilize the upstream) container images for your development environment, and then run them in a way that is easy to use and maintain.
 
 # Usage
 
@@ -26,7 +26,18 @@ vim ../.env # Should have reasonable enough defaults
 make build
 ```
 
-Verification:
+Or if you want prebuilt images only (architectures may vary):
+```
+git submodule add git@github.com:frison/_slash.git _
+cd _
+cat .env >> ../.env
+vim ../.env # Should have reasonable enough defaults
+make upstream
+make build
+```
+
+
+Verification (you will likely need to modify the .env location in the services file):
 ```
 cd _
 COMPOSE_FILE=services/docker-compose.yml docker-compose up
@@ -45,7 +56,10 @@ docker-compose run db-cli
 https://stackoverflow.com/questions/4219255/how-do-you-get-the-list-of-targets-in-a-makefile
 
 # Starting the database
-cd services/data && make db-admin
+
+It's likely the `services/docker-compose.yml` file will need it's `.env` path updated.
+`COMPOSE_FILE=services/docker-compose.yml docker-compose up`
+
 - Will use a shared named network "database"
 - Will host a web ui on http://localhost:3081
 - Adheres to .env
