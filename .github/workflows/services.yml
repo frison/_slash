@@ -45,6 +45,6 @@ jobs:
         with:
           dockerhub-username: ${{ secrets.DOCKER_USERNAME }}
           dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
-          dockerfile: ./Dockerfile.composite.scratch
+          dockerfile: ./Dockerfile.composite.services
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}
