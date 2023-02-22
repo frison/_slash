@@ -37,3 +37,6 @@ If you wish to publish these images, you have to create `.github/workflows/[:ima
 
 Add a new directory in the `[:image directory:]`, all of the above `make` commands will work without modification. To have it automatically published, you have to add it to the `.github/workflows/[:image directory:].yml` file by adding it to the matrix build.
 
+|File|Tips|
+|--|--|
+|`services/docker-compose.yml`|env_file should not be parent of the project root while making changes, or you should make one in your project root parent|

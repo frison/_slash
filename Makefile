@@ -1,6 +1,8 @@
 IMAGE_ABSOLUTE_PATHS = $(shell find ${CURDIR} -mindepth 1 -maxdepth 1 -type d | grep -v '\.[a-zA-Z0-9]*$$' | sort)
 SUBDIRS = $(notdir ${IMAGE_ABSOLUTE_PATHS})
 
+.PHONY: build clean upstream clean-composite-dockerfile composite-dockerfile upstream-confirm $(SUBDIRS)
+
 build: $(SUBDIRS)
 clean: $(SUBDIRS)
 clean-composite-dockerfile:
@@ -11,7 +13,13 @@ clean-composite-dockerfile:
 # we can't use the `FROM dev-base:local` statements.
 composite-dockerfile: clean-composite-dockerfile $(SUBDIRS)
 
-upstream: $(SUBDIRS)
+upstream-confirm:
+	@echo "Are you sure you want to delete _slash's .git (and more) directories?"
+	@echo "If you have local changes you want to keep, you should commit and push them first."
+	@echo -n "[y/N] : "
+	@read ans; if [ "$$ans" != "y" ]; then exit 1; fi
+
+upstream: upstream-confirm $(SUBDIRS)
 	rm -rf .git
 	rm -rf .github
 
@@ -29,8 +37,6 @@ remote-clean: remote
 
 $(SUBDIRS):
 	@$(MAKE) -C $@ ${MAKECMDGOALS}
-
-.PHONY: build clean upstream $(SUBDIRS)
 
 # We release on tags starting with v
 release:
