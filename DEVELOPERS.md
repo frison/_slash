@@ -31,9 +31,9 @@ Don't put `-` in your `[:image directory:]/[:tag directory:]` unless you want to
 
 Add a new directory to the root of this project. Call it `[:image directory:]`, and copy an `[:other image directory:]/Makefile`. No modification should be needed. All of the above `make` commands will work without modification
 
-If you wish to publish these images, you have to create `.github/workflows/[:image directory:].yml` file.
+If you wish to publish these images, you have to create `.github/workflows/[:image directory:].yml` file using an existing file as an example.
 
 # Adding a new tag for an image
 
-Add a new directory in the `[:image directory:]`, all of the above `make` commands will work without modification. To have it automatically published, you have to add it to the `.github/workflows/[:image directory:].yml` file. By adding it to the matrix build.
+Add a new directory in the `[:image directory:]`, all of the above `make` commands will work without modification. To have it automatically published, you have to add it to the `.github/workflows/[:image directory:].yml` file by adding it to the matrix build.
 
