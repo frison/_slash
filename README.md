@@ -1,10 +1,10 @@
-lodash-slash (`_slash`) is a development environment bootstrapper and image publishing framework. It allows you to build (or use the upstream) container images for your development environment, as well as contribute them back.
+lodash-slash (`_slash`) is a development environment bootstrapper and image publishing framework. It allows you to build (or use the upstream) container images for your development environment, as well as contribute changes back to them.
 
 # Usage
 
 - `make build` - will build the container images for your development environment. This is a one-time operation, and you should only need to run it when you change the Dockerfile or any of their `files/` directory contents.
 - `make clean` - will delete all the container images.
-- `make upstream` - will swap the image building to using upstream images. This is useful if you don't want to build the images locally, but still want to use the same images (for example, bootstrapping a container environment for development).
+- `make upstream` - will swap the image building to using upstream images. This is useful if you don't want to build the images locally, but still want to use the same images (for example, bootstrapping a container environment for development quickly).
 - `make remote` - will setup git in this directory again enabling you to pull in new dockerfiles, services, as well as to provide you an opportunity to update the upstream with any of your local changes.
 
 ## Using this in your project
@@ -15,16 +15,15 @@ git submodule add git@github.com:frison/_slash.git _
 cd _
 cat .env >> ../.env
 vim ../.env # Should have reasonable enough defaults
-make build
 ```
 
-### Or if you want prebuilt images only (architectures may vary):
+### If you want prebuilt images only (faster):
 ```
-git submodule add git@github.com:frison/_slash.git _
-cd _
-cat .env >> ../.env
-vim ../.env # Should have reasonable enough defaults
 make upstream
+```
+
+### Build the images
+```
 make build
 ```
 
