@@ -29,9 +29,9 @@ jobs:
           - 'services-pgadmin4'
         include:
           - target: 'services-postgres'
-            platforms: 'linux/amd64'
+            platforms: 'linux/amd64,linux/arm64'
           - target: 'services-pgadmin4'
-            platforms: 'linux/amd64'
+            platforms: 'linux/amd64,linux/arm64'
 
     steps:
       -
