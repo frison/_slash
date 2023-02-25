@@ -34,7 +34,7 @@ jobs:
           - target: 'dev-node'
             platforms: 'linux/amd64'
           - target: 'dev-rails'
-            platforms: 'linux/amd64,linux/arm64'
+            platforms: 'linux/amd64'
 
     steps:
       -
