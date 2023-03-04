@@ -1,3 +1,3 @@
-FROM scratch-000-base:local
+FROM scratch
 
 COPY ./files /
