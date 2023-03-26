@@ -1,0 +1,21 @@
+---
+layout: article
+title: A Dying Medium
+author: Brett Kosinski
+date: 2007-03-03 02:00:00 -0700
+category: [ aggravation ]
+no_fediverse: true
+---
+
+As everyone is perfectly aware, the Internet has had an incredibly profound effect on our society.  In many ways, it's revolutionized our lives, giving us the ability to touch people and information a world away, right from the comfort of our living rooms.  For many, these changes have been incredibly positive.  But for those invested in the status quo, particularly traditional media companies and the like, the 'net is a bane, one which blindsided them, transforming from curiosity to grave threat in a mere fifteen years, threatening to destroy business models that have existed for the last century.
+
+Among those threatened is the newspaper industry, which no longer has a monopoly (well, oligopoly, when combined with television) on information.  The result is companies left scrambling to make themselves relevant in order to attract new subscribers.  Of course, anyone who owns a home has probably sensed this.  I can't begin to count the number of times some teenager has arrived at my door, attempting to push me into buying a subscription (god damn these companies for introducing young, impressionable minds to pressure sales tactics so early... I'm betting a good half of these poor children will grow up to be used car salesmen).  
+
+Over the last few years, no doubt aided and abetted by souless marketing graduates, these companies have evolved their strategies in an effort to manipulate their victims into saying "yes" to a free month with the paper (good luck canceling **that** subscription).  In the past, I was amazed and disgusted by tactics that have included, among other things, children who inform you that, should they sell you a subscription, they will be entered into a draw for a scholarship to the university of their choice.  You wouldn't want to deny them the chance at an education, would you?  I'm not sure which angered me more, having my emotions manipulated like that or my intelligence so grossly underestimated.
+
+But today I discovered a new tactic that is, I think, even more insidious:  I hear a knock at the door.  Without thinking, I answer the door to discover a wholesome looking young man with a clipboard, the Sun logo displayed prominently on the letterhead (this was, I think, a tactical error on his part), immediately putting me on the defensive.  "You're gonna try to sell me a newspaper, aren't you?", I ask, clearly dismayed.  As I try to insist that, no, I don't want a damned paper (the Sun is the worst kind of populist tripe, only inches away from the World Weekly News), the young man informs me that part of the money will be going to support his local hockey team.  Oooh, clever, trying to appeal to my presumed love of Canada's favorite game (jokes on him, sucker!).  Again, I try to get rid of the little bastard, and he informs me that, rather than purchasing a newspaper, I could opt to donate $10 or $20, and the newspaper would go to a hospital, instead.  $10 or $20 to get rid of this kid?  Sounds like a good deal to me.  As it happens, I didn't actually **have** $10 or $20 on my person, so eventually he gave up in search of easier prey, but it was a close call.
+
+Now, what's incredibly clever about this strategy is the appeal to charity.  By giving the victim the option of donating cash instead, the person feels good, thinking that they're supporting a hockey team **and** providing newspapers to hospital patients and their loving families.  How can you say no to that?  But what **isn't** so obvious is that the newspaper company still gets their cut of the profits.  See, either way, you're buying a newspaper.  Worse, they never make it clear how much of that $10 or $20 would actually go to this presumably financially strapped hockey team.  For all you or I know, the newspaper company keeps half of that money (or more), and given that a monthly subscription to the Sun is around $20, that's a pretty good deal for a one-time newspaper donation.
+
+It's really quite clever.  Heck, even I got sucked in, and I pride myself on seeing through these transparent rouses.  I guess this is what happens when you combined the evil of marketing with the powers of psychology.
+

@@ -1,0 +1,21 @@
+---
+layout: article
+title: Where Pharo Falls Short
+author: Brett Kosinski
+date: 2010-05-17 02:00:00 -0700
+category: [ smalltalk, hacking ]
+no_fediverse: true
+---
+
+Well, as you might imagine from the title, I figured I'd take a bit of a break from my continual gushing about Seaside to examine some of the areas where I think Pharo/Squeak unfortunately falls behind as a development environment.  Of course, keep in mind, I wouldn't be using these tools if I didn't think they were an overall win, despite their shortcomings.  But perspective is always a good thing, and it's important to see the bad as well as the good.
+
+So, with that said, where to begin... well, as I've mentioned previously, in general, Smalltalk implementations make use of an [image](http://en.wikipedia.org/wiki/Smalltalk#Image-based_persistence) paradigm for storing and managing code.  In this world, from the outside, the image is a monolithic blob of binary data, but contained within is essentially a snapshot of the entire Smalltalk environment.  Open that image with a VM, and you're presented with a completely self-contained world, including a windowing system, editors, file managers, and so forth.  And in the case of [Pharo](http://www.pharo-project.org) or [Squeak](http://www.squeak.org), that entire world is open to unlimited poking and prodding, as the deepest bowels of the system are themselves written in Smalltalk and available for inspection.
+
+However, this metaphor has influenced Smalltalk in ways that, I think, have proven a detriment to it's adoption.  For example, in general, there is no other way to edit Smalltalk code, save through the editor(s) provided by the environment.  Now, granted, because that editor is deeply tied into the system, it's capable of browsing code in some very impressive ways.  But it means the user is given absolutely no flexibility to select a tool of his or her choice.  And in the case of Pharo/Squeak, those tools can be a bit primitive (and occasionally buggy), providing little in the way of customizability (well, unless you want to hack the code, which you are, of course, free to do), while failing to provide facilitates that one often takes for granted (macro facilities, multiple copy/paste buffers, regexp-based search/replace... the list goes on).  In fact, the Pharo/Squeak editor is little more than a basic Notepad-style editor with syntax highlighting and some primitive auto-indentation capability.
+
+Additionally, much as there is no option for editors, the choice of code management tools is extremely limited.  The current tool of choice for version control in Pharo/Squeak is [Monticello](http://wiki.squeak.org/squeak/1287), a form of distributed version control system.  Unfortunately, compared to, say, [git](http://git-scm.com/), Monticello is decidedly primitive.  Now, granted, there are those attempting to implement Git for Pharo/Squeak, but those projects are only just beginning, and one will still be limited to working in the Pharo/Squeak environment, and the tools available there.
+
+Lastly, the Pharo/Squeak VM itself can sometimes be rather... frustrating.  The VM itself is single-threaded, which means that any long-running piece of code, if not invoked in a background process (implemented as green threads), will hang the VM.  Fortunately, the Alt-. hotkey exists to interrupt such operations so they can be terminated, but if the operation is sufficiently nasty (say, accidentally looping and inspecting items in a collection, creating a very large number of windows), it can be very unpleasant to clean up.  Moreover, the image itself is only saved upon demand (ie, there are no automatic saves to a separate backup file, like in many editors), and so if something catastrophic does happen to take down the VM, one's work can be lost.
+
+Unfortunately, in the end, despite all these shortcomings, the damn language and libraries are so good, I just can't help but work with it.  While I'm sure much time is wasted dealing with the aforementioned issues, so much is gained from sheer productivity that the win is clearly there.  Plus, I must admit, Smalltalk is just plain **fun to write**.  In fact, I haven't had this much fun in years!
+
