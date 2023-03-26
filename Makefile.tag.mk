@@ -4,7 +4,7 @@ ABSOLUTE_PARENT_DIR := $(shell realpath ${CURDIR}/..)
 PARENT_DIR := $(shell realpath --relative-base=${ABSOLUTE_PARENT_DIR}/.. ${ABSOLUTE_PARENT_DIR})
 ESCAPED_PROJECT_RELATIVE_DIR := $(shell echo ${PROJECT_RELATIVE_DIR} | sed 's/\//\\\//g')
 
-PUBLISHED_CONTAINERS = $(shell find ${ABSOLUTE_PARENT_DIR} -mindepth 1 -maxdepth 1 -type d | sort | grep -v '[0-9]\{3\}-.*')
+PUBLISHED_CONTAINERS = $(shell find ${ABSOLUTE_PARENT_DIR} -maxdepth 2 -type f -name "Dockerfile" -exec dirname "{}" \; | sort | grep -v '[0-9]\{3\}-.*')
 PUBLISHED_SUBDIRS = $(notdir ${PUBLISHED_CONTAINERS})
 
 # Phony targets are targets that don't reference files; they are just commands -- some just happened to be named after
