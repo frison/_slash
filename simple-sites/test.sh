@@ -1,6 +1,8 @@
 make example
 
 if test -n "$GENERATE" ; then
+  sudo rm -rf test/static_site
+  touch test/static_site/.gitkeep
   docker run \
     -v "$(pwd)/test/content":/content \
     -v "$(pwd)/test/config":/config \

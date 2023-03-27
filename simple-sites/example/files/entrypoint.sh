@@ -19,8 +19,17 @@ if ! test -d /config ; then
 fi
 
 cd /themes/default/blog
-cp -R /content /themes/default/blog/_posts
-jekyll build
+mkdir /content.tmp
+cp -R /content/* /content.tmp
+
+if test -e /content.tmp/about.md ; then
+  mv /content.tmp/about.md /themes/default/blog/about.markdown
+fi
+
+mv /content.tmp/* /themes/default/blog/_posts
+
+cat /config/config.yml >> /themes/default/blog/_config.yml
+JEKYLL_ENV=production jekyll build
 mv _site/* /static_site
 
 exec "$@"
