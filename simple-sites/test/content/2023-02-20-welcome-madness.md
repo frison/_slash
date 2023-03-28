@@ -1,12 +1,12 @@
 ---
 layout: post
-title:  "Welcome to Madness!"
-date:   2023-02-20 23:39:52 -0500
+title:  Welcome to Madness!
+date:   2023-03-28 00:05:00 -0600
 categories: jekyll update
 ---
 Here you'll find an code sample demonstrating to generate all permutations of the alphabet in ruby:
 
-{% highlight ruby %}
+``` ruby
 def permutations(string)
   return [string] if string.length <= 1
   perms = permutations(string[1..-1])
@@ -18,16 +18,15 @@ def permutations(string)
   end
   new_perms
 end
-{% endhighlight %}
+```
 
-
-{% highlight ruby %}
+``` ruby
 def print_hi(name)
   puts "Hi, #{name}"
 end
 print_hi('Tom')
 #=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+```
 
 Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 
