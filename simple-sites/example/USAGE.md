@@ -31,39 +31,6 @@ Given that if I continue down this path, the static-site generator will have cha
    -e SHOW_USAGE=true \
    frison/simple-sites:example
 ```
----
-layout: post
-title:  Welcome to Madness!
-date:   2023-03-28 00:05:00 -0600
-categories:
-  - welcome
-  - madness
-  - intro
-  - static-site-generation
----
-
-Part of collaborating with an AI on a technical blog, is the blog itself. One of the oddities I wanted to experiment with is completely separating the content from everything else. The ideal end-result is publishing the content only through changes to a repository of markdown and minor configuration.
-
-A repository that is only markdown and configuration can be public without issue, this allows for the PRs created by AI to be publicly verified (and curated/edited by various editors on Github).
-
-Now that content is only a bunch of simple markdowns in a repository, the next steps are:
-- The human will initiate the collaboration by prompting the AI to write a post. It will be in my own personal style.
-- The human will reply to the AI's content with edits (it's done via email). This is not a loop.
-- The AI will create a PR to the content repository
-  - The AI will update the PR with a link to the PR itself.
-  - The AI will update the PR with a reference to the lineage of all automated paths that led to the PR.
-
-The above is all totally doable with my wacky semantic dataflow engine.
-
-## First iteration of the Static Site Generator
-
-Given that if I continue down this path, the static-site generator will have changed since I last authored this. However, to ensure it will pass the test of time, it's usage can be described with:
-
-``` shell
-> docker run \
-   -e SHOW_USAGE=true \
-   frison/simple-sites:example
-```
 
 Usage
 =====
@@ -154,4 +121,3 @@ This is where the container stores the static content. Because we volume mounted
     -p 8080:80 \
     nginx:alpine
 ```
-

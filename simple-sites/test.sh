@@ -1,4 +1,10 @@
-make example
+#!/bin/sh
+
+if test -z "${NO_BUILD:-}" ; then
+  make example
+else
+  echo "Skipping build. NO_BUILD parameter set."
+fi
 
 if test -n "$GENERATE" ; then
   rm -rf "$(pwd)/test/static_site/*"

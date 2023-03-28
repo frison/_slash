@@ -12,6 +12,16 @@ die () {
   exit 1
 }
 
+if test -n "${USAGE:-}" ; then
+  cat /USAGE.md
+  exit 0
+fi
+
+if test -n "${SHOW_CHANGES:-}" ; then
+  cat /CHANGELOG.md
+  exit 0
+fi
+
 if ! test -d /content ; then
   die "fatal : No content directory found."
 fi
@@ -38,23 +48,9 @@ if test -z "${GID:-}" ; then
   export GID=$(id -g)
 fi
 
-cd /themes/default/blog
 mkdir /content.tmp
 cp -R /content/* /content.tmp
-./process.sh /content.tmp
-
-if test -e /content.tmp/about.md ; then
-  mv /content.tmp/about.md /themes/default/blog/about.markdown
-fi
-
-mv /content.tmp/* /themes/default/blog/_posts
-
-cat /config/config.yml >> /themes/default/blog/_config.yml
-JEKYLL_ENV=production jekyll build
-
-# Copy the static site to the output directory using the specified
-# UID and GID run parameters, or the current user's UID and GID if not specified.
-cp -r _site/* /static_site/
+/process.sh /content.tmp
 chown -R ${UID}:${GID} /static_site/*
 
 exec "$@"
