@@ -12,7 +12,7 @@ die () {
   exit 1
 }
 
-if test -n "${USAGE:-}" ; then
+if test -n "${SHOW_USAGE:-}" ; then
   cat /USAGE.md
   exit 0
 fi

@@ -7,6 +7,7 @@ if test -e /content.tmp/about.md ; then
   mv /content.tmp/about.md /themes/default/blog/about.markdown
 fi
 
+mkdir _posts
 mv /content.tmp/* /themes/default/blog/_posts
 
 cat /config/config.yml >> /themes/default/blog/_config.yml
