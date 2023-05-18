@@ -2,3 +2,4 @@ openai==0.26.3 # https://github.com/openai/openai-python/issues/222
 simplejson
 requests
 twilio
+sendgrid
