@@ -1,9 +1,9 @@
 ##
-# Version: 1.1 (2023-02-16)
+# Version: 1.2 (2023-06-17)
 # Usage:
 #   `make [folder]`  - will build the docker image for the folder, including it's dependent containers assuming
 #                      they of the form `[0-9]{3}-[a-z]+`. They will be built in lexical order. This image will
-#                      be tagged with `${current-dir}-[folder]:local`
+#                      be tagged with `${current-dir}/[folder]:local`
 #   `make clean`     - will remove all of the docker images for the folder and it's dependent containers.
 #   `make base`      - will build only the base containers for the folder.
 #

@@ -33,14 +33,18 @@ runs:
       shell: bash
       run: |
         # Splits the build target and uses the last part as the tag prefix
-        # ie. 'runtime-walker' -> 'walker'
+        # ie. 'runtime/walker' -> 'walker'
         echo -n "tag_prefix=" >> $GITHUB_ENV
-        echo "${{ inputs.build-target }}" | awk -F'-' '{print $NF}' >> $GITHUB_ENV
+        basename "${{ inputs.build-target }}" >> $GITHUB_ENV
 
         # Splits the build target and uses everything but the tag prefix as the image name
-        # ie. 'dev-rails-71' -> 'dev-rails'
+        # ie. 'dev/rails-71' -> 'rails-71'
         echo -n "image=" >> $GITHUB_ENV
-        echo "${{ inputs.build-target }}" | awk -F'-' '{$NF=""; print $0}' | sed 's/ $//' | sed 's/ /-/' >> $GITHUB_ENV
+        dirname "${{ inputs.build-target }}" >> $GITHUB_ENV
+
+        # FROM x AS foo/000-bar
+        # is not supported in Dockerfiles (build stage names can't start with a number or contain symbols),
+        # as a consequence of this, when the composite file is generated, 
 
     # https://github.com/docker/metadata-action
     -

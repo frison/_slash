@@ -12,7 +12,7 @@ PUBLISHED_SUBDIRS = $(notdir ${PUBLISHED_CONTAINERS})
 .PHONY: build clean upstream ${DIR_NAME} ${PARENT_DIR} $(PUBLISHED_SUBDIRS) leaf-target base
 
 build:
-	@docker build . --tag $${IMAGE_DIRECTORY}-$${TAG_DIRECTORY}:local
+	@docker build . --tag $${IMAGE_DIRECTORY}/$${TAG_DIRECTORY}:local
 
 ${DIR_NAME}: build
 ${PARENT_DIR}: build
@@ -22,7 +22,7 @@ base: build
 # Transforms `FROM ([^/]*)` to `FROM (.*) AS $IMAGE_TO_BUILD`
 #   These are images that do not have a "/" in them, because they're not the target
 #   image we want to build or any local image.
-# Transforms `FROM (.*):local (.*)` to `FROM (.*) AS (.*)`
+# Transforms `FROM [:image directory:]/[:tag directory:]:local (.*)` to `FROM [:image directory:]-[:tag directory:] AS (.*)`
 # Transforms `COPY ./(.*) (.*)` to `COPY ./${ESCAPED_PROJECT_RELATIVE_DIR}/(.*) (.*)`
 # Transforms `COPY --chown=(..) ./(.*) (.*)` to `COPY ./${ESCAPED_PROJECT_RELATIVE_DIR}/(.*) (.*)`
 composite-dockerfile:
@@ -36,12 +36,12 @@ composite-dockerfile:
 	    >>  $${COMPOSITE_DOCKERFILE_DIR}/$${COMPOSITE_DOCKERFILE}
 	@cat Dockerfile |\
 		sed "s/FROM \([^ ]*\)$$/FROM \1 AS $${IMAGE_DIRECTORY}-$${TAG_DIRECTORY}/" |\
-		sed "s/FROM \(.*\):local \(.*\)$$/FROM \1 \2/"\ |\
+		sed "s/FROM \(.*\)\/\(.*\):local \(.*\)$$/FROM \1-\2 \3/"\ |\
 		sed "s/COPY\(.*\)\.\/\(.*\) \(.*\)$$/COPY \1\.\/${ESCAPED_PROJECT_RELATIVE_DIR}\/\2 \3/" \
 		>> $${COMPOSITE_DOCKERFILE_DIR}/$${COMPOSITE_DOCKERFILE}
 
 clean:
-	@docker rmi --force $${IMAGE_DIRECTORY}-$${TAG_DIRECTORY}:local || true
+	@docker rmi --force $${IMAGE_DIRECTORY}/$${TAG_DIRECTORY}:local || true
 
 upstream:
 	@rm -rf *

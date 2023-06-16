@@ -25,9 +25,9 @@ jobs:
       fail-fast: true
       matrix:
         target:
-          - 'scratch-scripts'
+          - 'scratch/scripts'
         include:
-          - target: 'scratch-scripts'
+          - target: 'scratch/scripts'
             platforms: 'linux/amd64,linux/arm64'
 
     steps:

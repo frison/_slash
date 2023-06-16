@@ -25,9 +25,9 @@ jobs:
       fail-fast: true
       matrix:
         target:
-          - 'runtime-walker'
+          - 'runtime/walker'
         include:
-          - target: 'runtime-walker'
+          - target: 'runtime/walker'
             platforms: 'linux/arm64'
 
     steps:

@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # escape=\
 # Rails requires node, so we base this off our node image.
-FROM dev-100-node:local
+FROM dev/100-node:local
 
 RUN \
   sudo \

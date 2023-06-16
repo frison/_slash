@@ -25,9 +25,9 @@ jobs:
       fail-fast: true
       matrix:
         target:
-          - 'simple-sites-example'
+          - 'simple-sites/example'
         include:
-          - target: 'simple-sites-example'
+          - target: 'simple-sites/example'
             platforms: 'linux/amd64'
 
     steps:
