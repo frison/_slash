@@ -45,17 +45,18 @@ runs:
         # ie. 'dev/rails-71' -> 'rails-71'
         echo -n "TAG_PREFIX=" >> $GITHUB_ENV
         TAG_PREFIX=$(basename "${{ inputs.build-target }}")
-        echo $TAG_PREFIX >> $GITHUB_ENV
+        echo ${TAG_PREFIX} >> $GITHUB_ENV
 
         # Splits the build target and uses everything but the tag prefix as the image name
         # ie. 'dev/rails-71' -> dev'
         echo -n "IMAGE=" >> $GITHUB_ENV
         IMAGE=$(dirname "${{ inputs.build-target }}")
-        echo $IMAGE >> $GITHUB_ENV
+        echo ${IMAGE} >> $GITHUB_ENV
 
         # The composite dockerfile will be named after the image
         # ie. 'dev/rails-71' -> Docker.composite.dev
-        echo "DOCKERFILE=Docker.composite.${TAG_PREFIX}" >> $GITHUB_ENV
+        DOCKERFILE=Docker.composite.${IMAGE}
+        echo "DOCKERFILE=${DOCKERFILE}" >> $GITHUB_ENV
 
     # Add support for more platforms with QEMU (optional)
     # https://github.com/docker/setup-qemu-action
