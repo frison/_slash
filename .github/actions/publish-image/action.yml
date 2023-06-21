@@ -34,17 +34,17 @@ runs:
       run: |
         # Splits the build target and uses the last part as the tag prefix
         # ie. 'dev/rails-71' -> 'rails-71'
-        echo -n "tag_prefix=" >> $GITHUB_ENV
+        echo -n "TAG_PREFIX=" >> $GITHUB_ENV
         basename "${{ inputs.build-target }}" >> $GITHUB_ENV
 
         # Splits the build target and uses everything but the tag prefix as the image name
         # ie. 'dev/rails-71' -> dev'
-        echo -n "image=" >> $GITHUB_ENV
+        echo -n "IMAGE=" >> $GITHUB_ENV
         dirname "${{ inputs.build-target }}" >> $GITHUB_ENV
 
         # The composite dockerfile will be named after the image
         # ie. 'dev/rails-71' -> Docker.composite.dev
-        echo "dockerfile=Docker.composite.${{ env.image }}" >> $GITHUB_ENV
+        echo "DOCKERFILE=Docker.composite.${TAG_PREFIX}" >> $GITHUB_ENV
         # In multistage builds, images cannot be referenced with stage names that start with a number or contain symbols.
         # So because we can't have
         #   FROM x AS dev/rails-71
@@ -64,10 +64,10 @@ runs:
           # Always: push `[:image directory:]/[:tag directory:]-edge`.
           # On tag: push `[:image directory:]/[:tag directory:]-[:tag]`.
           # Always: push `[:image directory:]/[:tag directory:]-[:short_sha (7 chars)]`.
-          type=raw,value=${{ env.tag_prefix }},priority=1000,enable={{is_default_branch}}
-          type=raw,value=edge,prefix=${{ env.tag_prefix }}-,priority=700
-          type=ref,enable=true,priority=600,prefix=${{ env.tag_prefix }}-,suffix=,event=tag
-          type=sha,enable=true,priority=100,prefix=${{ env.tag_prefix }}-,suffix=,format=short
+          type=raw,value=${{ env.TAG_PREFIX }},priority=1000,enable={{is_default_branch}}
+          type=raw,value=edge,prefix=${{ env.TAG_PREFIX }}-,priority=700
+          type=ref,enable=true,priority=600,prefix=${{ env.TAG_PREFIX }}-,suffix=,event=tag
+          type=sha,enable=true,priority=100,prefix=${{ env.TAG_PREFIX }}-,suffix=,format=short
 
     # Add support for more platforms with QEMU (optional)
     # https://github.com/docker/setup-qemu-action
@@ -107,5 +107,5 @@ runs:
           type=gha
         cache-from: |
           type=gha,mode=max
-          type=registry,ref=${{ inputs.dockerhub-username }}/${{ env.image }}:${{ env.tag_prefix }},mode=max
+          type=registry,ref=${{ inputs.dockerhub-username }}/${{ env.IMAGE }}:${{ env.TAG_PREFIX }},mode=max
 
