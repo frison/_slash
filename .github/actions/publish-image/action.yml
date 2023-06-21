@@ -32,6 +32,12 @@ runs:
       name: 🤔 Set image and tag prefix variables
       shell: bash
       run: |
+        # In multistage builds, images cannot be referenced with stage names that start with a number or contain symbols.
+        # So because we can't have
+        #   FROM x AS dev/rails-71
+        # as a stage name, as a consequence of this when the stage name is generated in the composite dockerfile
+        # it will be of the form 'dev_rails-71' instead of 'dev/rails-71'
+
         # Splits the build target and uses the last part as the tag prefix
         # ie. 'dev/rails-71' -> 'rails-71'
         echo -n "TAG_PREFIX=" >> $GITHUB_ENV
@@ -45,11 +51,28 @@ runs:
         # The composite dockerfile will be named after the image
         # ie. 'dev/rails-71' -> Docker.composite.dev
         echo "DOCKERFILE=Docker.composite.${TAG_PREFIX}" >> $GITHUB_ENV
-        # In multistage builds, images cannot be referenced with stage names that start with a number or contain symbols.
-        # So because we can't have
-        #   FROM x AS dev/rails-71
-        # as a stage name, as a consequence of this when the stage name is generated in the composite dockerfile
-        # it will be of the form 'dev_rails-71' instead of 'dev/rails-71'
+
+    # Add support for more platforms with QEMU (optional)
+    # https://github.com/docker/setup-qemu-action
+    # This is an architecture emulator that claims to provide near-native speeds for multi-arch builds, however
+    # build rails for arm64 on an amd64 machine timed out after 6 hours -- so I'm not convinced I believe that claim.
+    -
+      name: 🛠 Set up QEMU
+      uses: docker/setup-qemu-action@v2
+      with:
+        platforms: ${{ inputs.platforms }}
+
+    -
+      name: 🛠 Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+      with:
+        platforms: ${{ inputs.platforms }}
+
+    -
+      name: 🔨 Generate dockerfile
+      shell: bash
+      run: |
+        make composite-dockerfile
 
     # https://github.com/docker/metadata-action
     -
@@ -69,36 +92,12 @@ runs:
           type=ref,enable=true,priority=600,prefix=${{ env.TAG_PREFIX }}-,suffix=,event=tag
           type=sha,enable=true,priority=100,prefix=${{ env.TAG_PREFIX }}-,suffix=,format=short
 
-    # Add support for more platforms with QEMU (optional)
-    # https://github.com/docker/setup-qemu-action
-    # This is an architecture emulator that provides near-native speeds for multi-arch builds.
-    #
-    # The previous method used https://github.com/crazy-max/ghaction-docker-buildx
-    # which is now split between the below two actions.
-    -
-      name: 🛠 Set up QEMU
-      uses: docker/setup-qemu-action@v2
-      with:
-        platforms: ${{ inputs.platforms }}
-
-    -
-      name: 🛠 Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-      with:
-        platforms: ${{ inputs.platforms }}
-
-    -
-      name: 🔨 Generate dockerfile
-      shell: bash
-      run: |
-        make composite-dockerfile
-
     -
       name: 🔨🚀🐳 ${{ inputs.build-target }} (${{ inputs.platforms }})
       uses: docker/build-push-action@v3
       with:
         context: .
-        file: ${{ env.dockerfile }}
+        file: ${{ env.DOCKERFILE }}
         platforms: ${{ inputs.platforms }}
         target: ${{ inputs.build-target }}
         push: true
