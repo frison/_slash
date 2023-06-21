@@ -25,7 +25,7 @@ upstream: upstream-confirm $(SUBDIRS)
 
 remote:
 	git init
-	git remote add origin git@github.com:frison/_slash.git
+	git remote add origin $${GIT_REMOTE}
 	git fetch origin main
 	git reset --soft origin/main
 	git add .

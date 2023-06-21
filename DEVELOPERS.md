@@ -11,11 +11,23 @@ To build images locally with this tool, you'll need to have the following instal
 
 **The above is mediocre, but it's been verified on various linux and mac systems to work without issue.**
 
+## Project Configuration
+
+You will need to configure your repositories action variables and action secrets.
+
+### Action Variables
+
+- `DOCKERHUB_USERNAME` - Your dockerhub username -- only dockerhub is supported
+
+# Action Secrets
+
+- `DOCKERHUB_TOKEN`
+
 ## Directory Structure
 
 - `[:image directory:]` - The directories that represent an image and it's tags. Ie. `scratch/`
 - `[:image directory:]/[0-9]-.*` - A `base image` used in all or some of the `[:tag directory:]`. Ie. `scratch/000-base` **This is not published.**
-- `[:image directory:]/[:tag directory:]` - An image that will be built as `[:image directory:]-[:tag directory:]:local` (ie. `scratch-000-base:local` and `scratch-scripts:local`
+- `[:image directory:]/[:tag directory:]` - An image that will be built as `[:image directory:]/[:tag directory:]:local` (ie. `scratch/000-base:local` and `scratch/scripts:local`
 - `.github/` - Contains the github actions responsible for building and publishing the images.  They will be published as `[:image directory:]:[:tag directory:]` and additional suffixes (like short-hash). (ie, `scratch:scripts`, `scratch:scripts-d3adb33`)
 
 ## The Porcelain

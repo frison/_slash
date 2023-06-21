@@ -10,8 +10,8 @@ on:
     # 9am daily UTC
     - cron: "0 9 * * *"
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
     paths:
       - 'dev/**'
       - '.github/workflows/dev.yml'
@@ -46,8 +46,7 @@ jobs:
         uses: ./.github/actions/publish-image
         continue-on-error: false
         with:
-          dockerhub-username: ${{ secrets.DOCKER_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKER_TOKEN }}
-          dockerfile: ./Dockerfile.composite.dev
+          dockerhub-username: ${{ vars.DOCKERHUB_USERNAME }}
+          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
           platforms: ${{ matrix.platforms }}
           build-target: ${{ matrix.target }}

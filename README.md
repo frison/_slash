@@ -1,13 +1,17 @@
-lodash-slash (`_slash`) is a development environment bootstrapper and image publishing framework. It allows you to build (or use the upstream) container images for your development environment, as well as contribute changes back to them.
+lodash-slash (`_slash`) is a simplified convention based pattern for container building, publishing, and using in your development environment.
+
+# Making changes
+
+Go to [DEVELOPERS.md](DEVELOPERS.md)
 
 # Usage
 
-- `make build` - will build the container images for your development environment. This is a one-time operation, and you should only need to run it when you change the Dockerfile or any of their `files/` directory contents.
+- `make build` - will build all of the container images in the repository. This is a one-time operation, and you should only need to run it when you change the Dockerfile or any of their `files/` directory contents.
 - `make clean` - will delete all the container images.
-- `make upstream` - will swap the image building to using upstream images. This is useful if you don't want to build the images locally, but still want to use the same images (for example, bootstrapping a container environment for development quickly).
-- `make remote` - will setup git in this directory again enabling you to pull in new dockerfiles, services, as well as to provide you an opportunity to update the upstream with any of your local changes.
+- `make upstream UPSTREAM_REGISTORY=frison` - will swap the image building to using upstream images provided as a parameter. This is useful if want to use your `_slash` images in your project, but want to save building them yourself.
+- `make remote GIT_REMOTE=git@github.com:frison/_slash.git` - will setup git in this directory again enabling you to pull in new dockerfiles, services, as well as to provide you an opportunity to update the upstream with any of your local changes.
 
-## Using this in your project
+## Using these containers in your project
 
 ### In your repository run:
 ```
@@ -19,7 +23,7 @@ vim ../.env # Should have reasonable enough defaults
 
 ### If you want prebuilt images only (faster):
 ```
-make upstream
+make upstream UPSTREAM_REGISTORY=frison
 ```
 
 ### Build the images
@@ -47,7 +51,3 @@ This will do many things:
 - Will host a web ui on http://localhost:3081
 - Adheres to .env
 - Will require make clean build on .env changes
-
-# Making changes
-
-Go to [DEVELOPERS.md](DEVELOPERS.md)

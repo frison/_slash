@@ -33,18 +33,23 @@ runs:
       shell: bash
       run: |
         # Splits the build target and uses the last part as the tag prefix
-        # ie. 'runtime/walker' -> 'walker'
+        # ie. 'dev/rails-71' -> 'rails-71'
         echo -n "tag_prefix=" >> $GITHUB_ENV
         basename "${{ inputs.build-target }}" >> $GITHUB_ENV
 
         # Splits the build target and uses everything but the tag prefix as the image name
-        # ie. 'dev/rails-71' -> 'rails-71'
+        # ie. 'dev/rails-71' -> dev'
         echo -n "image=" >> $GITHUB_ENV
         dirname "${{ inputs.build-target }}" >> $GITHUB_ENV
 
-        # FROM x AS foo/000-bar
-        # is not supported in Dockerfiles (build stage names can't start with a number or contain symbols),
-        # as a consequence of this, when the composite file is generated, 
+        # The composite dockerfile will be named after the image
+        # ie. 'dev/rails-71' -> Docker.composite.dev
+        echo "dockerfile=Docker.composite.${{ env.image }}" >> $GITHUB_ENV
+        # In multistage builds, images cannot be referenced with stage names that start with a number or contain symbols.
+        # So because we can't have
+        #   FROM x AS dev/rails-71
+        # as a stage name, as a consequence of this when the stage name is generated in the composite dockerfile
+        # it will be of the form 'dev_rails-71' instead of 'dev/rails-71'
 
     # https://github.com/docker/metadata-action
     -
@@ -55,13 +60,13 @@ runs:
         images: |
           ${{ inputs.dockerhub-username }}/${{ env.image }}
         tags: |
-          # Always push a tags (for `dev/rails` it will be `dev:rails` for latest commit into default branch
-          type=raw,value=${{ env.tag_prefix }},priority=700,enable={{is_default_branch}}
-          # Always push 'edge' tag for latest commit in any branch
-          type=raw,value=edge,prefix=${{ env.tag_prefix }}-,priority=500
-          # If you push a tag, use the same tag on the image
+          # On main: push `[:image directory:]/[:tag directory:]`.
+          # Always: push `[:image directory:]/[:tag directory:]-edge`.
+          # On tag: push `[:image directory:]/[:tag directory:]-[:tag]`.
+          # Always: push `[:image directory:]/[:tag directory:]-[:short_sha (7 chars)]`.
+          type=raw,value=${{ env.tag_prefix }},priority=1000,enable={{is_default_branch}}
+          type=raw,value=edge,prefix=${{ env.tag_prefix }}-,priority=700
           type=ref,enable=true,priority=600,prefix=${{ env.tag_prefix }}-,suffix=,event=tag
-          # One per sha
           type=sha,enable=true,priority=100,prefix=${{ env.tag_prefix }}-,suffix=,format=short
 
     # Add support for more platforms with QEMU (optional)
@@ -93,7 +98,7 @@ runs:
       uses: docker/build-push-action@v3
       with:
         context: .
-        file: ${{ inputs.dockerfile }}
+        file: ${{ env.dockerfile }}
         platforms: ${{ inputs.platforms }}
         target: ${{ inputs.build-target }}
         push: true
