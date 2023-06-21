@@ -55,7 +55,7 @@ runs:
 
         # The composite dockerfile will be named after the image
         # ie. 'dev/rails-71' -> Docker.composite.dev
-        DOCKERFILE=Docker.composite.${IMAGE}
+        DOCKERFILE=Dockerfile.composite.${IMAGE}
         echo "DOCKERFILE=${DOCKERFILE}" >> $GITHUB_ENV
 
     # Add support for more platforms with QEMU (optional)
