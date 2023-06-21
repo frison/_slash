@@ -58,7 +58,7 @@ runs:
       uses: docker/metadata-action@v4
       with:
         images: |
-          ${{ inputs.dockerhub-username }}/${{ env.image }}
+          ${{ inputs.dockerhub-username }}/${{ env.IMAGE }}
         tags: |
           # On main: push `[:image directory:]/[:tag directory:]`.
           # Always: push `[:image directory:]/[:tag directory:]-edge`.
