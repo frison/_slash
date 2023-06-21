@@ -37,16 +37,21 @@ runs:
         #   FROM x AS dev/rails-71
         # as a stage name, as a consequence of this when the stage name is generated in the composite dockerfile
         # it will be of the form 'dev_rails-71' instead of 'dev/rails-71'
+        #
+        # We use 3-step GITHUB_ENV setting so that the variables are available to the next lines as a consistent
+        # practice. This is because changes to the GITHUB_ENV file is not available until after the step.
 
         # Splits the build target and uses the last part as the tag prefix
         # ie. 'dev/rails-71' -> 'rails-71'
         echo -n "TAG_PREFIX=" >> $GITHUB_ENV
-        basename "${{ inputs.build-target }}" >> $GITHUB_ENV
+        TAG_PREFIX=$(basename "${{ inputs.build-target }}")
+        echo $TAG_PREFIX >> $GITHUB_ENV
 
         # Splits the build target and uses everything but the tag prefix as the image name
         # ie. 'dev/rails-71' -> dev'
         echo -n "IMAGE=" >> $GITHUB_ENV
-        dirname "${{ inputs.build-target }}" >> $GITHUB_ENV
+        IMAGE=$(dirname "${{ inputs.build-target }}")
+        echo $IMAGE >> $GITHUB_ENV
 
         # The composite dockerfile will be named after the image
         # ie. 'dev/rails-71' -> Docker.composite.dev
