@@ -32,12 +32,7 @@ runs:
       name: 🤔 Set image and tag prefix variables
       shell: bash
       run: |
-        # In multistage builds, images cannot be referenced with stage names that start with a number or contain symbols.
-        # So because we can't have
-        #   FROM x AS dev/rails-71
-        # as a stage name, as a consequence of this when the stage name is generated in the composite dockerfile
-        # it will be of the form 'dev_rails-71' instead of 'dev/rails-71'
-        #
+
         # We use 3-step GITHUB_ENV setting so that the variables are available to the next lines as a consistent
         # practice. This is because changes to the GITHUB_ENV file is not available until after the step.
 
@@ -57,6 +52,14 @@ runs:
         # ie. 'dev/rails-71' -> Docker.composite.dev
         DOCKERFILE=Dockerfile.composite.${IMAGE}
         echo "DOCKERFILE=${DOCKERFILE}" >> $GITHUB_ENV
+
+        # In multistage builds, images cannot be referenced with stage names that start with a number or contain symbols.
+        # So because we can't have
+        #   FROM x AS dev/rails-71
+        # as a stage name, as a consequence of this when the stage name is generated in the composite dockerfile
+        # it will be of the form 'dev_rails-71' instead of 'dev/rails-71'
+        BUILD_TARGET="${IMAGE}_${TAG_PREFIX}"
+        echo "BUILD_TARGET=${BUILD_TARGET}" >> $GITHUB_ENV
 
     # Add support for more platforms with QEMU (optional)
     # https://github.com/docker/setup-qemu-action
@@ -98,6 +101,7 @@ runs:
           type=ref,enable=true,priority=600,prefix=${{ env.TAG_PREFIX }}-,suffix=,event=tag
           type=sha,enable=true,priority=100,prefix=${{ env.TAG_PREFIX }}-,suffix=,format=short
 
+    # https://github.com/docker/build-push-action
     -
       name: 🔨🚀🐳 ${{ inputs.build-target }} (${{ inputs.platforms }})
       uses: docker/build-push-action@v3
@@ -105,11 +109,11 @@ runs:
         context: .
         file: ${{ env.DOCKERFILE }}
         platforms: ${{ inputs.platforms }}
-        target: ${{ inputs.build-target }}
+        target: ${{ env.BUILD_TARGET }}
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         cache-to: |
-          type=gha
+          type=gha,mode=max
         cache-from: |
           type=gha,mode=max
           type=registry,ref=${{ inputs.dockerhub-username }}/${{ env.IMAGE }}:${{ env.TAG_PREFIX }},mode=max
