@@ -28,6 +28,7 @@ jobs:
           - 'dev/python'
           - 'dev/node'
           - 'dev/rails'
+          - 'dev/java'
         include:
           - target: 'dev/python'
             platforms: 'linux/amd64,linux/arm64'
@@ -35,7 +36,8 @@ jobs:
             platforms: 'linux/amd64'
           - target: 'dev/rails'
             platforms: 'linux/amd64'
-
+          - target: 'dev/java'
+            platforms: 'linux/amd64'
     steps:
       -
         name: 🛒 Checkout
