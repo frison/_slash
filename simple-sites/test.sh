@@ -15,7 +15,7 @@ if test -n "$GENERATE" ; then
     -v "$(pwd)/test/static_site":/static_site \
     -e UID="$(id -u)" \
     -e GID="$(id -g)" \
-    simple-sites-example:local
+    simple-sites/example:local
 fi
 
 if test -n "$SERVE" ; then
