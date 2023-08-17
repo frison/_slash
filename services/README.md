@@ -18,7 +18,7 @@ COMPOSE_FILE=services/docker-compose.yml docker-compose up
 
 ## Port Mappings
 
-|Service|Host|Container|Dependencies|
-|---|---|---|---|---|
-|database|5432|5432|||
-|database-ui|3081|80||database|
+|Service|Host|Container|Service Dependencies|
+|---|---|---|---|
+|database|5432|5432||
+|database-ui|3081|80|database|
