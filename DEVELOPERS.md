@@ -9,7 +9,7 @@ To build images locally with this tool, you'll need to have the following instal
 - `docker`
 - `make`
 
-**The above is mediocre, but it's been verified on various linux and mac systems to work without issue.**
+**The above is mediocre, but it's been verified on various linux, mac, and windows systems to work without issue.**
 
 ## Project Configuration
 
@@ -56,3 +56,10 @@ Don't put `-` in your `[:image directory:]/[:tag directory:]` unless you want to
 |File|Tips|
 |--|--|
 |`services/docker-compose.yml`|env_file should not be parent of the project root while making changes, or you should make one in your project root parent|
+
+## `git-layer`
+
+This repository makes use of git-layers, which is an alternative to git submodules that fits this repository's needs better. To update and embed external changes into this repository using git-layer:
+
+- Get https://github.com/frison/git-layer
+- run `git-layer --apply`
