@@ -4,7 +4,4 @@
 FROM dev/000-base:local
 
 RUN \
-  sudo \
-  apk add --no-cache \
-    # Java Compiler
-    openjdk11
+  sudo apk add --no-cache maven
