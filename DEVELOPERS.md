@@ -33,9 +33,9 @@ You will need to configure your repositories action variables and action secrets
 ## The Porcelain
 
 - `make [:image directory:]` - Will build all of the images in the `[:image directory:]` and their dependencies.
-- `cd [:image directory:] && make [:tag directory:]` - Will build the image in the `[:tag directory:]` and tag it locally as `[:image directory:]-[:tag directory:]:local`.
+- `cd [:image directory:] && make [:tag directory:]` - Will build the image in the `[:tag directory:]` and tag it locally as `[:image directory:]/[:tag directory:]:local`.
 - `cd [:image directory:] && make base` - Will build all of the base images in the `[:image directory:]`.
-- `make composite-dockerfile` - Will generate a `Dockerfile.composite.[:image directory:]` file that will enable building targets in the `[:image directory:]` which will parallelize with buildx -- this is used for building the images with github actions. The targets of the `Dockerfile.composite.[:image directory]` are of the form `[:image directory:]-[:tag directory:]`
+- `make composite-dockerfile` - Will generate a `Dockerfile.composite.[:image directory:]` file that will enable building targets in the `[:image directory:]` which will parallelize with buildx -- this is used for building the images with github actions. The targets of the `Dockerfile.composite.[:image directory]` are of the form `[:image directory:]-[:tag directory:]`. These targets have different names than the local image names because of limitations in multi-stage build names.
 
 # Adding a new image
 
