@@ -24,18 +24,17 @@ RUN \
 ENV PATH="$GEM_HOME/bin:$GEM_HOME/gems/bin:$HOME/.rbenv/shims:$HOME/.rbenv/plugins/ruby-build/bin:$HOME/.rbenv/bin:$PATH"
 
 RUN \
-  echo $PATH && \
   rbenv install 3.1.2 \
   && rbenv global 3.1.2
 
-# RUN \
-#   gem install bundler \
-#   && gem install rails -v 7.0.3
+RUN \
+  gem install bundler \
+  && gem install rails -v 7.0.3
 
-# RUN \
-#    curl https://cli-assets.heroku.com/install.sh | sh
+RUN \
+   curl https://cli-assets.heroku.com/install.sh | sh
 
-# COPY ./files /
+COPY ./files /
 
-# # Bundle install can mutate the Gemfile.lock, so we allow it to be modified.
-# RUN sudo chmod 777 /Gemfile.lock && cd / && bundle install
+# Bundle install can mutate the Gemfile.lock, so we allow it to be modified.
+RUN sudo chmod 777 /Gemfile.lock && cd / && bundle install
