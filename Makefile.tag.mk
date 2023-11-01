@@ -37,7 +37,6 @@ composite-dockerfile:
 	@cat Dockerfile |\
 		sed "s/FROM \([^ ]*\)$$/FROM \1 AS $${IMAGE_DIRECTORY}_$${TAG_DIRECTORY}/" |\
 		sed "s/FROM \(.*\)\/\(.*\):local \(.*\)$$/FROM \1_\2 \3/"\ |\
-		sed "s/COPY --from=\([^-]*\)-\(.*\) \(.*\)$$/COPY --from=\1_\2 \3/"\ |\
 		sed "s/COPY\(.*\)\.\/\(.*\) \(.*\)$$/COPY \1\.\/${ESCAPED_PROJECT_RELATIVE_DIR}\/\2 \3/" \
 		>> $${COMPOSITE_DOCKERFILE_DIR}/$${COMPOSITE_DOCKERFILE}
 

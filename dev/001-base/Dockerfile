@@ -1,9 +1,9 @@
 # syntax=docker/dockerfile:1
 # escape=\
-FROM dev/000-base-layered:local AS dev_000-base
+FROM dev/000-base-layered:local AS dev-000-base-layered
 FROM scratch
 
-COPY --from=dev_000-base / /
+COPY --from=dev-000-base-layered / /
 USER human
 WORKDIR /home/human
 ENV HOME /home/human
