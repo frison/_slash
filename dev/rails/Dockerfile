@@ -36,6 +36,5 @@ RUN \
 
 COPY ./files /
 
-
 # Bundle install can mutate the Gemfile.lock, so we allow it to be modified.
 RUN sudo chmod 777 /Gemfile.lock && cd / && bundle install
