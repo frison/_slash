@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # escape=\
-FROM alpine:3.16
+FROM alpine:3.18
 
 # When there are upstream dependency changes that would not result
 # in a rebuild of the image, we can explain why we need a rebuild here
