@@ -1,0 +1,2 @@
+File B - plain text companion to multi-a.md
+Also created by MCP push_files.
